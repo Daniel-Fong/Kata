@@ -39,17 +39,30 @@ public class Dictionary {
 	 * @throws IOException
 	 */
 	public Set<String> getDictionary() throws IOException {
-    	InputStreamReader isr = new InputStreamReader(  this.getClass().getResourceAsStream(RESOURCE));
         Set<String> dict = new TreeSet<>();
-        
-    	try ( BufferedReader reader = new BufferedReader(isr)) {
-            String s;
-            while ( (s = reader.readLine() ) !=null ) {
-                dict.add(s);
-            }
-            
-            return dict;
+        try (InputStreamReader isr = new InputStreamReader(  this.getClass().getResourceAsStream(RESOURCE))) {
+	    	try ( BufferedReader reader = new BufferedReader(isr)) {
+	            String s;
+	            while ( (s = reader.readLine() ) !=null ) {
+	                dict.add(s);
+	            }
+	    	}
         }
+    	
+        return dict;
+	}
+	
+	/**
+	 * Retrieves the dictionary as an array
+	 * @return
+	 * @throws IOException
+	 */
+	public String[] getDictionaryArray() throws IOException {
+		
+		Set<String> d = getDictionary();
+		String[] dict = new String[d.size()];
+		d.toArray(dict);
+		return dict;
 	}
 
 }

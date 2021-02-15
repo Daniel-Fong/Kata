@@ -53,5 +53,4 @@ public class FriendFinder {
 		}
 		return Math.abs(pos1-pos2);
 	}
-
 }
