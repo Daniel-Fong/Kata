@@ -1,4 +1,5 @@
 package com.smt.kata.object;
+import java.util.*;
 
 // Junit 5
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,15 +72,17 @@ class SortKataTest {
 		assertNotEquals("1", people.get(0).getId());
 		
 		/*** Make sure this class will sort by ID to begin **/
-		//Collections.sort(people);
+		Collections.sort(people);
 		assertEquals(null, people.get(0).getId());
 		assertEquals("112345", people.get(1).getId());
 		
 		/*** Add command to sort by Age **/
+		Collections.sort(people, new SortKata.SortKataAgeComparator());
 		assertEquals(0, people.get(0).getAge());
 		assertEquals(21, people.get(1).getAge());
 		
 		/*** Add command to sort by name **/
+		Collections.sort(people, new SortKata.SortKataNameComparator());
 		assertNull(people.get(0).getName());
 		assertEquals("Andy", people.get(1).getName());
 

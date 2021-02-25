@@ -1,4 +1,6 @@
 package com.smt.kata.object;
+import java.util.Comparator;
+import com.smt.kata.util.HashCodeUtil;
 
 /****************************************************************************
  * <b>Title</b>: SortKata.java
@@ -15,7 +17,7 @@ package com.smt.kata.object;
  * @since Feb 7, 2021
  * @updates:
  ****************************************************************************/
-public class SortKata {
+public class SortKata implements Comparable<SortKata> {
 	
 	private String id;
 	private String name;
@@ -69,6 +71,29 @@ public class SortKata {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
+	@Override
+    public int compareTo(SortKata kata) {
+        if(kata.id == null ) return 1;
+        if(this.id == null ) return -1;
+        return (Integer.parseInt(this.id) < Integer.parseInt(kata.id))? 1:-1;
+    }
+	
+	public static class SortKataAgeComparator implements Comparator<SortKata> {
+        @Override
+        public int compare (SortKata s1, SortKata s2) {
+            return Integer.compare(s1.getAge(), s2.getAge());
+        }
+    }
+	
+	public static class SortKataNameComparator implements Comparator<SortKata> {
+        @Override
+        public int compare (SortKata s1, SortKata s2) {
+            if(s1.getName() == null) return -1;
+            if (s2.getName() == null) return 1;
+            return (s1.getName().toUpperCase().compareTo(s2.getName().toUpperCase()));
+        }
+    }
 }
 
 

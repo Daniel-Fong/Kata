@@ -34,6 +34,40 @@ public class IPAddress {
 	 * @return
 	 */
 	public int numberHosts(String ipStart, String ipEnd) {
-		return 0;
+		int[] start = intArr(ipStart);
+		int[] end = intArr(ipEnd);
+		
+		int diff = 0;
+		
+		for (int i = 0; i<start.length; i++) {
+			int multiplier = (int) Math.pow(256, 3-i);
+			diff += (start[i] - end[i]) * multiplier; 
+		}
+		
+		return Math.abs(diff);
+	}
+	
+	public int[] intArr(
+			String str) {
+		int[] arr = new int[4];
+		String num = "";
+		int counter = 0;
+		for (int i=0; i<str.length(); i++) {
+			if (i == str.length() - 1) {
+				num += str.charAt(i);
+				arr[counter] = Integer.parseInt(num);
+			}
+			else if (str.charAt(i) == '.') {
+				arr[counter] = Integer.parseInt(num);
+				System.out.println(num);
+				num = "";
+				counter ++;
+			}
+			else {
+				num += str.charAt(i);
+			}
+		}
+//		System.out.println(arr[3]);
+		return arr;
 	}
 }
