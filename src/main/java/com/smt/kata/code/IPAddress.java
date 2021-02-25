@@ -34,6 +34,7 @@ public class IPAddress {
 	 * @return
 	 */
 	public int numberHosts(String ipStart, String ipEnd) {
+
 		int[] start = intArr(ipStart);
 		int[] end = intArr(ipEnd);
 		
@@ -69,5 +70,9 @@ public class IPAddress {
 		}
 //		System.out.println(arr[3]);
 		return arr;
+
+		
+        return 0;
+
 	}
 }
