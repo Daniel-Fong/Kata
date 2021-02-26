@@ -30,7 +30,44 @@ public class CorrectTheTime {
 	}
 	
 	public String transform(String time) {
-	
-		return time;
+		
+		if (time == null) {
+			return "";
+		}
+		String[] arr = time.split(":");
+		int hours = Integer.parseInt(arr[0]);
+		int minutes = Integer.parseInt(arr[1]);
+		int seconds = Integer.parseInt(arr[2]);
+		
+		if (seconds >= 60) {
+			minutes ++;
+			seconds = seconds % 60;
+		}
+		
+		if (minutes >= 60) {
+			hours ++;
+			minutes = minutes % 60;
+		}
+		
+		if (hours >= 24) {
+			hours = hours % 24;
+		}
+		
+		String h = hours + "";
+		String m = minutes + "";
+		String s = seconds + "";
+		
+		if (hours < 10) {
+			h = "0" + hours;
+		}
+		if (minutes < 10) {
+			m = "0" + minutes;
+		}
+		if (seconds < 10) {
+			s = "0" + seconds;
+		}
+
+		String result = h + ":" + m + ":" + s;
+		return result;
 	}
 }
