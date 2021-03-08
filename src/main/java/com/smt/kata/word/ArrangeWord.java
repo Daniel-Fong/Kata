@@ -22,7 +22,7 @@ public class ArrangeWord {
 	/**
 	 * Holds the results of the permutation
 	 */
-	private List<String> items;
+	private static List<String> items;
 
 	/**
 	 * 
@@ -38,7 +38,17 @@ public class ArrangeWord {
 	 */
 	public List<String> getPermutations(String word) {
 		items = new ArrayList<>();
-		
+		recur ("", word);
 		return items;
+	}
+	
+	public static void recur (String permutation, String word) {
+		if (word == "") {
+		}
+		for (int i = 0; i<word.length(); i++) {
+			char c = word.charAt(i);
+			String sub1= word.substring(0, i);
+			String sub2= word.substring(i, word.length()-i);
+		}
 	}
 }

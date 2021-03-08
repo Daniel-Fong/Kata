@@ -70,7 +70,7 @@ public class CorrectTheTimeTest {
 	}
 	
 	/**
-	 * Test method for {@link com.smt.kata.data.CorrectTheTime#transform(java.lang.String)}.
+	 * Test mjethod for {@link com.smt.kata.data.CorrectTheTime#transform(java.lang.String)}.
 	 */
 	@Test
 	public void testTransformCrazy() throws Exception {
