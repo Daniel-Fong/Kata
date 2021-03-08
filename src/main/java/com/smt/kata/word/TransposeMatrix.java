@@ -38,6 +38,7 @@ public class TransposeMatrix {
 	 * @return
 	 */
 	public String parse(String[][] matrix) {
+<<<<<<< HEAD
 		String result = "";
 		if (matrix == null || matrix.length == 0) {
 			return result;
@@ -50,5 +51,8 @@ public class TransposeMatrix {
 			
 		}
 		return result.substring(0, result.length() - 1);
+=======
+		return matrix[0][0];
+>>>>>>> 5522d7cfc85b21179077c77012b9f3792ba536a2
 	}
 }
