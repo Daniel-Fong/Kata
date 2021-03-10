@@ -31,6 +31,13 @@ package com.smt.kata.word;
 public class ReverseWord {
 
 	/**
+	 * 
+	 */
+	public ReverseWord() {
+		super();
+	}
+	
+	/**
 	 * Takes the phrase and reverses the ords
 	 * @param phrase
 	 * @return
