@@ -1,4 +1,6 @@
 package com.smt.kata.code;
+import java.util.ArrayList;
+import java.util.List;
 
 /****************************************************************************
  * <b>Title</b>: CreditCardValidator.java
@@ -44,6 +46,39 @@ public class CreditCardValidator {
 	 * @return
 	 */
 	public boolean isValid(String ccn) {
-		return true;
+		if (ccn == "" || ccn == null) {
+			return false;
+		}
+		if (!ccn.matches("\\d+")) {
+			return false;
+		}
+		int check = Integer.parseInt(Character.toString(ccn.charAt(ccn.length()-1)));
+		String nums = ccn.substring(0, ccn.length()-1);
+		System.out.println(ccn);
+		StringBuilder reverse = new StringBuilder();
+		reverse.append(nums);
+		reverse.reverse();
+		int[] arr = new int[reverse.length()];
+		for (int i = 0; i<reverse.length(); i++) {
+			if (i % 2 == 0) {
+				int twice = Integer.parseInt(Character.toString(reverse.charAt(i))) * 2;
+				if (twice >= 10) {
+					String str = Integer.toString(twice);
+					arr[i] = Integer.parseInt(Character.toString(str.charAt(0))) + Integer.parseInt(Character.toString(str.charAt(1)));
+				}
+				arr[i] = Integer.parseInt(Character.toString(reverse.charAt(i)));
+			}
+		}
+		int sum = 0;
+		for (int j = 0; j<arr.length; j++) {
+			sum += arr[j];
+		}
+		String lastStr = Integer.toString(sum);
+		int last = Integer.parseInt(Character.toString(lastStr.charAt(lastStr.length()-1)));
+		if (10 - last == check) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
