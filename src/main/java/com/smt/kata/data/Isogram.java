@@ -50,4 +50,7 @@ public class Isogram {
 		}
 		return true;
 	}
+        
+        return phrase == null;
+    }
 }
