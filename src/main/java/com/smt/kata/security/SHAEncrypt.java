@@ -1,5 +1,6 @@
 package com.smt.kata.security;
 
+import java.security.MessageDigest;
 // JDK 11.x
 import java.security.NoSuchAlgorithmException;
 
@@ -25,6 +26,8 @@ import java.security.NoSuchAlgorithmException;
  ****************************************************************************/
 public class SHAEncrypt {
 
+	private String hashDigestType = "SHA-256";
+
 	/**
 	 * Default constructor.  Assigns SHA-256
 	 */
@@ -38,6 +41,7 @@ public class SHAEncrypt {
 	 */
 	public SHAEncrypt(String hashDigestType) {
 		super();
+		this.hashDigestType = hashDigestType;
 	}
 
 	/**
@@ -48,6 +52,22 @@ public class SHAEncrypt {
 	 * @throws InvalidDataException
 	 */
 	public String encrypt(String val) throws NoSuchAlgorithmException {
-		return val;
+		if (val == null) {
+			throw new NullPointerException();
+		}
+		try {
+			MessageDigest md = MessageDigest.getInstance(this.hashDigestType);
+			final byte[] hash = md.digest(val.getBytes("UTF-8"));
+			final StringBuilder hexString = new StringBuilder();
+	        for (int i = 0; i < hash.length; i++) {
+	            final String hex = Integer.toHexString(0xff & hash[i]);
+	            if(hex.length() == 1) 
+	              hexString.append('0');
+	            hexString.append(hex);
+	        }
+	        return hexString.toString();
+		} catch(Exception ex){
+			throw new NoSuchAlgorithmException();
+		}
 	}
 }
