@@ -45,7 +45,6 @@ public class TagParser {
 	 * @return
 	 */
 	public List<String> evaluateTags(String tag) {
-		List<String> tags = new ArrayList<>();
-		return tags;
+		return new ArrayList<>(tag.length());
 	}
 }

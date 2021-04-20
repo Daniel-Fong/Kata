@@ -2,6 +2,7 @@ package com.smt.kata.word;
 
 import java.util.ArrayList;
 // JDK 11.x
+import java.util.ArrayList;
 import java.util.List;
 
 /****************************************************************************

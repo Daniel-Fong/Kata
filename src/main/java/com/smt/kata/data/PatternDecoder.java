@@ -30,8 +30,6 @@ public class PatternDecoder {
 	 * @return Collection of the matching patterns
 	 */
 	public List<String> decodePattern(String pattern) {
-		List<String> patterns = new ArrayList<>();
-
-		return patterns;
+		return new ArrayList<>();
 	}
 }

@@ -22,7 +22,7 @@ public class ArrangeWord {
 	/**
 	 * Holds the results of the permutation
 	 */
-	private static List<String> items;
+	private List<String> items;
 
 	/**
 	 * 
@@ -64,7 +64,12 @@ public class ArrangeWord {
         return items;
     }
     
-    private static void permutation(String permutation, String word) {
+    /**
+     * Recursive method to get the permutations
+     * @param permutation
+     * @param word
+     */
+    private void permutation(String permutation, String word) {
         //Check the base case
         if (word.isEmpty()) {
             items.add(permutation + word);

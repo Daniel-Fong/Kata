@@ -41,6 +41,7 @@ public class FriendFinder {
 	 * @return
 	 */
 	public int calculateDistance(String line) {
+<<<<<<< HEAD
 		int result = 0;
 		int pos1 = -1;
 		int pos2 = -1;
@@ -52,5 +53,9 @@ public class FriendFinder {
 			return -1;
 		}
 		return Math.abs(pos1-pos2);
+=======
+		
+		return line.length();
+>>>>>>> eb7b304c234b80c65702c3fc694c8de53dfc06e0
 	}
 }

@@ -68,11 +68,6 @@ public class IPAddress {
 				num += str.charAt(i);
 			}
 		}
-//		System.out.println(arr[3]);
 		return arr;
-
-		
-        return 0;
-
 	}
 }

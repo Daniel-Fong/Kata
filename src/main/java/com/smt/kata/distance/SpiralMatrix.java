@@ -45,8 +45,7 @@ public class SpiralMatrix {
 	 * @return List of the integers in clockwise spiral order
 	 */
 	public List<Integer> clockwise(int[][] matrix) {
-	    List<Integer> result = new ArrayList<>();
-	    return result;
+	    return new ArrayList<>();
 	}
 	
 	/**
@@ -55,7 +54,6 @@ public class SpiralMatrix {
 	 * @return List of the integers in counter-clockwise spiral order
 	 */
 	public List<Integer> counterClockwise(int[][] matrix) {
-	    List<Integer> result = new ArrayList<>();
-	    return result;
+	    return new ArrayList<>();
 	}
 }
