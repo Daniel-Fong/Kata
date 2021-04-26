@@ -37,6 +37,26 @@ public class PhoneNumberDecoder {
 	 * @return formatted phone number.
 	 */
 	public String textToNum(String pn) {
-		return pn;
+		if (pn == null || pn == "") {
+			return "";
+		}
+		String upper = pn.toUpperCase();
+		String[] arr = upper.split("");
+		for (int i = 0; i < pn.length(); i++) {
+			if (pn.charAt(i) > 64 && pn.charAt(i) < 91) {
+				System.out.println(pn.charAt(i));
+				int x = (int)pn.charAt(i) - 64;
+				int counter = 1;
+				while (x >= 3) {
+					x -= 3;
+					counter ++;
+				}
+				arr[i] = Integer.toString(counter);
+			} else if (pn.charAt(i) == 45) {
+				arr[i] = ".";
+			}
+		}
+//		System.out.println()
+		return String.join("", arr);
 	}
 }
