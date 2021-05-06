@@ -1,5 +1,7 @@
 package com.smt.kata.data;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 // Spacelibs 1.x
 import com.siliconmtn.data.bean.GenericVO;
 
@@ -45,7 +47,20 @@ public class Riffler {
 	 * @return Combined array.  Empty array if invalid data
 	 */
 	public char[] riffle(char[] source, char[] dest) {
-		return source;
+		if (ArrayUtils.isEmpty(source) || ArrayUtils.isEmpty(dest) || dest.length > source.length || dest.length < source.length - 1) {
+			return new char[0];
+		}
+		char[] result = new char[source.length + dest.length];
+		int index = 0;
+		for (int i = 0; i < source.length; i++) {
+			result[index] = source[i];
+			index ++;
+			if (i < dest.length) {
+				result[index] = dest[i];
+				index++;
+			}
+		}
+		return result;
 	}
 	
 	/**
@@ -54,6 +69,24 @@ public class Riffler {
 	 * @return Source array as key and the dest array as value
 	 */
 	public GenericVO deriffle(char[] combined) {
-		return new GenericVO(combined, null);
+		char[] odd;
+		char[] even;
+		if (combined.length % 2 == 0) {
+			odd = new char[combined.length/2];
+			even = new char[combined.length/2];
+		} else {
+			odd = new char[(combined.length - 1) / 2 + 1];
+			even = new char[(combined.length - 1) / 2];
+		}
+		int index = 0;
+		for (int i = 0; i < odd.length; i++) {
+			odd[i] = combined[index];
+			index ++;
+			if (index < combined.length) {
+				even[i] = combined[index];
+				index ++;
+			}
+		}
+		return new GenericVO(odd, even);
 	}
 }
