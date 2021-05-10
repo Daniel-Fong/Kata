@@ -1,5 +1,7 @@
 package com.smt.kata.distance;
 
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title:</b> OneFingerDistance.java
  * <b>Project:</b> SMT-Kata
@@ -34,6 +36,20 @@ public class OneFingerDistance {
 	 * @return distance between the letters
 	 */
 	public int calculate(String word) {
-		return word.length();
+		if (StringUtils.isEmpty(word)) {
+			return 0;
+		}
+		word = word.toUpperCase();
+		int distance = 0;
+		for (int i = 0; i < word.length() - 1; i++) {
+			if (word.charAt(i) > 90 || word.charAt(i) < 65) {
+				return 0;
+			}
+			if (Math.abs(word.charAt(i) - word.charAt(i + 1)) != 0) {
+				distance += Math.abs(word.charAt(i) - word.charAt(i + 1)) - 1;;
+			}
+			
+		}
+		return distance;
 	}
 }
