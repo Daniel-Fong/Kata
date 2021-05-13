@@ -1,7 +1,11 @@
 package com.smt.kata.time;
 
+import java.util.Calendar;
 // JDK 11.x
 import java.util.Date;
+
+import com.siliconmtn.data.format.DateFormat;
+import com.siliconmtn.data.format.DateFormat.DatePattern;
 
 /****************************************************************************
  * <b>Title:</b> FiveLongWeekends.java
@@ -43,6 +47,16 @@ public class FiveLongWeekends {
 	 * @return Date of the five long weekends month.  Null otherwise
 	 */
 	public Date findNext(Date d) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		if (cal.getActualMaximum(Calendar.DAY_OF_MONTH) == 31 && Calendar.FRIDAY == cal.get(Calendar.DAY_OF_WEEK)) {
+				return d;
+		} else {
+			cal.add(Calendar.MONTH, 1);
+			d.setMonth(d.getMonth() + 1);
+			findNext(d);
+		}
+		System.out.println(d);
 		return d;
 	}
 
