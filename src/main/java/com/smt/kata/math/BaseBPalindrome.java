@@ -34,7 +34,37 @@ public class BaseBPalindrome {
 	 * @return
 	 */
 	public boolean isPalindrome(int value, int base) {
+		System.out.println(value);
+		int[] arr = getNewNumberArr(value, base);
+		System.out.println(arr.length);
+		for (int i = 0; i<Math.floor(arr.length/2); i++) {
+			if (arr[i] != arr[arr.length - i - 1]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public int[] getNewNumberArr(int value, int base) {
+		int i = 0;
+		int v = value;
+		while (base * i < value) {
+			i++;
+		}
+		i -= 1;
+		System.out.println(i);
+		int[] arr = new int[i + 1];
+		while (i >= 0) {
+			if (v >= base * i) {
+				v -= base * i;
+				arr[arr.length - (i + 1)] = 1;
+				i--;
+			} else {
+				arr[arr.length - (i+1)] = 0;
+				i--;
+			}
+		}
+		return arr;
 		
-		return value == base;
 	}
 }
