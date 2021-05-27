@@ -1,5 +1,10 @@
 package com.smt.kata.distance;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title:</b> MatrixIsland.java
  * <b>Project:</b> SMT-Kata
@@ -44,6 +49,8 @@ public class MatrixIsland {
 	 */
 	public MatrixIsland(int[][] matrix) throws NullPointerException {
 		super();
+		this.matrix = matrix;
+		findLargest();
 	}
 	
 	/**
@@ -51,7 +58,48 @@ public class MatrixIsland {
 	 * @return Number of nodes in the largest island
 	 */
 	protected void findLargest() {
+		if ( matrix.length < 1 || matrix == null ) throw new NullPointerException();
 		/** Do something here **/
+		List<Integer[]> arr = new ArrayList<>();
+		List<Integer> islands = new ArrayList<>();
+		for (int j = 0; j < matrix.length; j++) {
+			int size = 0;
+			for (int i = 0; i < matrix[j].length; i++) {
+				if (matrix[j][i] != 0) {
+					size++;
+				}
+			}
+			int counter = 0;
+			Integer[] js = new Integer[size];
+			for (int x = 0; x< matrix[j].length; x++) {
+				if (size > 0 && matrix[j][x] != 0) {
+					js[counter] = x;
+					counter++;
+				}		
+					
+			}
+			arr.add(js);
+			System.out.println("arr = " + Arrays.toString(js));
+		}
+		
+		int islandCount = 0;
+		int islandSize = 0;
+		for (int y = 0; y<arr.size() - 1; y++) {
+			for (int z = 0; z<arr.get(y).length; z++) {
+				if (Arrays.asList(arr.get(y+1)).contains(arr.get(y)[z])){
+					islandSize += arr.get(y).length;
+				} else {
+					islandCount++;
+					islands.add(islandSize);
+					islandSize = 0;
+				}
+				
+			}
+		}
+		nodesInLargestIsland = Collections.max(islands);
+		hasIslands = islandCount > 0;
+		numberIslands = islandCount;
+		
 	}
 	
 	/**
