@@ -1,7 +1,12 @@
 package com.smt.kata.io;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 // JDK 11.x
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 /****************************************************************************
@@ -32,6 +37,21 @@ public class CountingLines {
 	 * @throws IOException
 	 */
 	public int getNumberLines(String clazzName) throws IOException {	
-		return clazzName.length();
+		if (clazzName == null) throw new NullPointerException();
+		String path = "src/main/java/" + clazzName.replace('.', '/') + ".java";
+		String line = "";
+		int count = 0;
+		try (BufferedReader fr = new BufferedReader(new FileReader(path))){
+			while ((line = fr.readLine()) != null) {
+				if (line.trim().length() == 0) {
+					continue;
+				} else if (line.trim().startsWith("/") || line.trim().startsWith("*")) {
+					continue;
+				} else {
+					count ++;
+				}
+			}
+			return count;
+		}
 	}
 }

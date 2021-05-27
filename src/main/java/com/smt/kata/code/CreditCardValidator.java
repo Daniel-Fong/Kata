@@ -52,32 +52,30 @@ public class CreditCardValidator {
 			return false;
 		}
 		int check = Integer.parseInt(Character.toString(ccn.charAt(ccn.length()-1)));
-		String nums = ccn.substring(0, ccn.length()-1);
-		System.out.println(ccn);
-		StringBuilder reverse = new StringBuilder();
-		reverse.append(nums);
-		reverse.reverse();
-		int[] arr = new int[reverse.length()];
-		for (int i = 0; i<reverse.length(); i++) {
-			if (i % 2 == 0) {
-				int twice = Integer.parseInt(Character.toString(reverse.charAt(i))) * 2;
-				if (twice >= 10) {
-					String str = Integer.toString(twice);
-					arr[i] = Integer.parseInt(Character.toString(str.charAt(0))) + Integer.parseInt(Character.toString(str.charAt(1)));
-				}
-				arr[i] = Integer.parseInt(Character.toString(reverse.charAt(i)));
-			}
+		int[] arr = new int[ccn.length()-1];
+		for (int i = 0; i < ccn.length() - 1; i++) {
+			arr[arr.length - i - 1] = Integer.parseInt(ccn.charAt(i) + "");
 		}
 		int sum = 0;
-		for (int j = 0; j<arr.length; j++) {
-			sum += arr[j];
+		for (int j = 0; j< arr.length; j++) {
+			if (j % 2 == 0) {
+				if (arr[j] * 2 > 9) {
+					String str = Integer.toString(arr[j] * 2);
+					sum += Integer.parseInt(str.charAt(0) + "") + Integer.parseInt(str.charAt(1) + "");
+				} else {	
+					sum += arr[j] * 2;
+				}
+			} else {
+				sum += arr[j];
+			}
 		}
 		String lastStr = Integer.toString(sum);
-		int last = Integer.parseInt(Character.toString(lastStr.charAt(lastStr.length()-1)));
+		int last = Integer.parseInt(lastStr.charAt(lastStr.length() - 1) + "");
 		if (10 - last == check) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
 }
