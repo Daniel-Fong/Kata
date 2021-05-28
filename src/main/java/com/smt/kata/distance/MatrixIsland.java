@@ -110,25 +110,26 @@ public class MatrixIsland {
 		/** Do something here **/
 	}
 
-	/**
-	 * @return the hasIslands
-	 */
-	public boolean hasIslands() {
-		return hasIslands;
-	}
 
-	/**
-	 * @return the numberIslands
-	 */
-	public int getNumberIslands() {
-		return numberIslands;
-	}
+    /**
+     * @return the hasIslands
+     */
+    public boolean hasIslands() {
+        return this.numberIslands > 0;
+    }
 
-	/**
-	 * @return the nodesInLargestIsland
-	 */
-	public int getNodesInLargestIsland() {
-		return nodesInLargestIsland;
-	}
+    /**
+     * @return the numberIslands
+     */
+    public int getNumberIslands() {
+        return numberIslands;
+    }
+
+    /**
+     * @return the nodesInLargestIsland
+     */
+    public int getNodesInLargestIsland() {
+        return nodesInLargestIsland;
+    }
 
 }
