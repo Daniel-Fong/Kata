@@ -33,6 +33,25 @@ public class DashatizeIt {
 	 * @return Formatted string.  Empty string if input is empty or null
 	 */
     public String process(String input) {
-    	return input;
+    	if (input == null || input.length() < 1) {
+    		return "";
+    	}
+    	String str = input.replaceAll("[^\\d.]", "");
+    	String result = "";
+    	for (int i = 0; i < str.length(); i++) {
+    		if (Integer.parseInt(str.charAt(i) + "")%2 != 0) {
+    			if (result.length() == 0 || result.charAt(result.length()-1) == '-') {
+    				result += str.charAt(i) + "-";
+    			} else {
+    				result += "-" + str.charAt(i) + "-";
+    			}
+    		} else {
+    			result += str.charAt(i);
+    		}
+    	}
+    	if (result.length() > 0 && result.charAt(result.length() -1) == '-') {
+    		return result.substring(0, result.length()-1);
+    	}
+    	return result;
     }
 }
