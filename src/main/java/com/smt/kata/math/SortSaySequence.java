@@ -1,5 +1,7 @@
 package com.smt.kata.math;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: SortSaySequence.java 
  * <b>Project</b>: SMT-Kata 
@@ -36,7 +38,7 @@ public class SortSaySequence {
 	 * Mapping for the units from "1" to "ONE", etc ....
 	 */
 	public enum units {
-            ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
+        ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
     }
 
 	/**
@@ -46,6 +48,11 @@ public class SortSaySequence {
 	 * @return Reordered array of elements
 	 */
     public int[] reorder(int[] input) {
-        return new int[0];
+        return (input == null) ? new int[0] : Arrays.stream(input)
+        		.mapToObj(num -> units.values()[Math.abs(num)])
+        		.sorted((s1, s2) -> s1.name().toString().compareTo(s2.name().toString()))
+        		.mapToInt(a -> units.valueOf(a.name()).ordinal())
+        		.toArray();
+        
     }
 }

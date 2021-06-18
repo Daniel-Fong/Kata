@@ -40,6 +40,16 @@ public class RotateForMax {
 	 * @return
 	 */
 	public long rotate(long input) {
-        return input;
+		long num = Math.abs(input);
+		String str = num + "";
+		long greatest = input;
+		for (int i = 0; i < str.length()-1; i++) {
+			str = str.substring(0, i) + str.substring(i + 1) + str.charAt(i);
+			System.out.println(str);
+			if (Long.parseLong(str) > greatest) {
+				greatest = Long.parseLong(str);
+			}
+		}
+        return greatest;
     }
 }
