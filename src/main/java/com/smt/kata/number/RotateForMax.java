@@ -32,24 +32,3 @@ package com.smt.kata.number;
  * @since May 30, 2021
  * @updates:
  ****************************************************************************/
-public class RotateForMax {
-
-	/**
-	 * Rotates each sequence of digits
-	 * @param input number to be rotated
-	 * @return
-	 */
-	public long rotate(long input) {
-		long num = Math.abs(input);
-		String str = num + "";
-		long greatest = input;
-		for (int i = 0; i < str.length()-1; i++) {
-			str = str.substring(0, i) + str.substring(i + 1) + str.charAt(i);
-			System.out.println(str);
-			if (Long.parseLong(str) > greatest) {
-				greatest = Long.parseLong(str);
-			}
-		}
-        return greatest;
-    }
-}
