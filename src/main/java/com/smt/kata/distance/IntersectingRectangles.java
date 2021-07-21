@@ -1,5 +1,7 @@
 package com.smt.kata.distance;
 
+import java.util.ArrayList;
+import java.util.Collections;
 // JDK 11.x
 import java.util.List;
 
@@ -48,7 +50,34 @@ public class IntersectingRectangles {
 	 * @return List of overlapping coordinates
 	 */
 	public List<Coord> getOverlap(Coord one, int width1,  int height1, Coord two, int width2, int height2) {
-		return null;
+		List<Coord> results = new ArrayList<>();
+		List<Coord> boxOne = getBox(one, width1, height1);
+		List<Coord> boxTwo = getBox(two, width2, height2);
+		
+		for (int i = 0; i < boxOne.size(); i++) {
+			System.out.println("one " + boxOne.get(i).top + "," + boxOne.get(i).left);
+			if (boxTwo.contains(boxOne.get(i))) {
+				results.add(boxOne.get(i));
+			}
+		}
+		for (int j = 0; j < boxOne.size(); j++) {
+			System.out.println("two " + boxTwo.get(j).top + "," + boxOne.get(j).left);
+		}
+		
+		return results;
+	}
+	
+	public List<Coord> getBox(Coord start, int width, int height) {
+		List<Coord> results = new ArrayList<>();
+		for (int i = 0; i < height; i ++) {
+			for (int j = 0; j < width; j++) {
+				Coord coordinate = new Coord();
+				coordinate.top = start.top + i;
+				coordinate.left = start.left + j;
+				results.add(coordinate);
+			}
+		}
+		return results;
 	}
 }
 
@@ -75,6 +104,13 @@ class Coord {
 		this();
 		this.top = top;
 		this.left = left;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Coord)) return false;
+		Coord c2 = (Coord)o;
+		return (c2.left == this.left && c2.top == this.top);
 	}
 }
 

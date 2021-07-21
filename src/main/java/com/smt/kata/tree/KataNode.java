@@ -70,6 +70,11 @@ public class KataNode<T> implements Serializable {
 	public String getNodeId() {
 		return nodeId;
 	}
+	
+	public KataNode<T> copy(){
+        return new KataNode<T>(this.nodeId, this.parentId, this.data);
+    }
+	
 	/**
 	 * @param nodeId the nodeId to set
 	 */

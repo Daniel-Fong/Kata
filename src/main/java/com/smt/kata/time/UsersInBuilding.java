@@ -33,6 +33,11 @@ import java.util.Date;
 public class UsersInBuilding {
 
 	protected enum EntryType { ENTER, EXIT }
+	Date start;
+	Date end;
+	int count = 0;
+	boolean greater;
+	Response result = new Response();
 	
 	/**
 	 * Initializes the counts and transactions
@@ -49,6 +54,23 @@ public class UsersInBuilding {
 	 */
 	public void addEntry(Date entryTime, int count, EntryType type) {
 		/** Add something here **/
+		if (this.greater == true) {
+			result.end = entryTime;
+		}
+		if (type == EntryType.ENTER) {
+			this.count += count;
+		} else {
+			this.count -= count;
+		}
+		this.start = entryTime;
+		if (this.count > result.count) {
+			this.greater = true;
+			result.count = this.count;
+			result.start = this.start;
+			result.end = this.end;
+		} else {
+			this.greater = false;
+		}
 	}
 	
 	/**
@@ -56,7 +78,7 @@ public class UsersInBuilding {
 	 * @return
 	 */
 	public Response getBusyPeriod() {
-		return new Response();
+		return this.result;
 	}
 
 	/**

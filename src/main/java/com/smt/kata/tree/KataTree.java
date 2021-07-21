@@ -1,12 +1,13 @@
 package com.smt.kata.tree;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
-=======
->>>>>>> 4781cff8f9be139321c63f6feecfc3d1fe47ff26
 // JDK 11.x
 import java.util.List;
+import java.util.Map;
 
 /****************************************************************************
  * <b>Title</b>: KataTree.java
@@ -29,231 +30,184 @@ import java.util.List;
  * @updates:
  ****************************************************************************/
 public class KataTree<T> {
-<<<<<<< HEAD
     // Members
     private KataNode<T> root;
-    private int totalNodeCount = 0;
-
+    private int depth = 0;
+    private int size = 0;
+    
     /**
-     * Creates a Tree of nodes based upon a Collection of unlinked nodes. Uses the
-     * assigned Node as the root node. The nodeId and the prentId is included in
-     * each node in the list. Builds the
-     * 
+     * Creates a Tree of nodes based upon a Collection of unlinked nodes.  
+     * Uses the assigned Node as the root node.  The nodeId and the prentId is included
+     * in each node in the list.  Builds the 
      * @param data Collection of unlinked Node objects
      * @param root Root Node object
      */
-    public KataTree(List<KataNode<T>> data, KataNode<T> root) {
-        this.root = root;
-        addChildren(data, root);
-    }
-
-    private void addChildren(List<KataNode<T>> data, KataNode<T> root) {
-        var rootChildren = new ArrayList<KataNode<T>>();
-        var queue = new ArrayList<KataNode<T>>();
-        var children = new ArrayList<KataNode<T>>();
-
-        for (var node : data) {
-            if (node.getParentId().equals(root.getNodeId())) {
-                rootChildren.add(node);
-                queue.add(node);
-            } else
-                children.add(node);
+    public KataTree(List<KataNode<T>> data,  KataNode<T> root) {
+        if (root != null) {
+            /** Intentionally Blank.  Please build **/
+            this.root = root;
+            this.size = 1;
+            this.depth = 1;
+            recursivelyAddChildren(root, data, this.depth);
         }
-        rootChildren.sort((n1, n2) -> n1.getNodeId().compareTo(n2.getNodeId()));
-        root.setChildren(rootChildren);
+    }
 
-        children.sort((n1, n2) -> n1.getNodeId().compareTo(n2.getNodeId()));
-        for (var newRoot : queue) {
-            addChildren(children, newRoot);
+    public void recursivelyAddChildren(KataNode<T> node, List<KataNode<T>> list, int depth) {
+        depth += 1;
+        List<KataNode<T>> children = new ArrayList<>();
+        for(KataNode<T> n : list) {
+            if (n.getParentId().equals(node.getNodeId())) {
+                size++;
+                this.depth = Math.max(this.depth, depth);
+                children.add(n);
+                recursivelyAddChildren(n, list, depth);
+            }
         }
+        Collections.sort(children, new Comparator<KataNode<T>>() {
 
-        this.totalNodeCount++;
+            @Override
+            public int compare(KataNode<T> n1, KataNode<T> n2) {
+                return n1.getNodeId().compareTo(n2.getNodeId());
+            }
+        });
+        node.setChildren(children);
     }
-
-    private int calculateDepth(KataNode<T> node) {
-        if (node == null) return 0;
-        var children = node.getChildren();
-        if (children.isEmpty()) return 1;
-
-        var depth = 0;
-        for (var child : children)
-            depth = Math.max(depth, calculateDepth(child));
-
-        return depth + 1;
-    }
-
+    
     /**
      * Returns the total depth of the tree
-     * 
      * @return
      */
-    public int getDepth() {
-        return calculateDepth(this.root);
-    }
+    public int getDepth() {return depth;}
 
     /**
-     * Retrieves the root node, which, if the tree is built properly, would contain
+     * Retrieves the root node, which, if the tree is built properly, would contain 
      * the entire tree object
-     * 
      * @return Root node for this tree
      */
     public KataNode<T> getRootNode() {
         return root;
     }
-
+    
     /**
      * Calculates the total number of nodes
-     * 
      * @return Total number of nodes calculated
      */
     public int getTotalNodeCount() {
-        return totalNodeCount;
+        return size;
     }
-
+    
     /**
      * Finds a node based upon its id
-     * 
-     * @return node corresponding to the ID. Null if not found
+     * @return node corresponding to the ID.  Null if not found
      */
     public KataNode<T> find(String nodeId) {
-        var list = new ArrayList<KataNode<T>>();
-        levelOrderTraversal(root, list);
-        
-        for (var item : list)
-            if (item.getNodeId().equals(nodeId)) 
-                return item;
+        KataNode<T> n = find(nodeId, root);
+        if(n != null) {
+            return n;
+        }
+        return null;
+    }
 
+    public KataNode<T> find(String nodeId, KataNode<T> node) {
+        if(node.getNodeId().equals(nodeId)) {
+            return node;
+        }
+
+        for(KataNode<T> n : node.getChildren()) {
+            KataNode<T> child = find(nodeId, n); 
+            if(child != null) {
+                return child.copy();
+            }
+        }
         return null;
     }
     
-    private KataNode<T> copyNode(KataNode<T> node) {
-        return new KataNode<>(node.getNodeId(), node.getParentId(), node.getData());
-    }
-
     /**
      * Gets a collection of nodes
-     * 
+     * Root Left Right
      * @return collection is provided in a preorder list formatting
      */
     public List<KataNode<T>> getPreOrderList() {
-        var temp = new ArrayList<KataNode<T>>();
-        preOrderTraversal(this.root, temp);
-        var result = new ArrayList<KataNode<T>>();
-        for (var node : temp) {
-            result.add(copyNode(node));
-        }
-
-        return result;
+        return recursePreOrder2(root);
     }
-
-    private void preOrderTraversal(KataNode<T> root, List<KataNode<T>> result) {
-        if (root == null) return;
-        var children = root.getChildren();
-        if (!children.isEmpty()) {
-            result.add(root);
-
-            var childCount = children.size();
-            for (var i = 0; i < childCount - 1; ++i)
-                inOrderTraversal(children.get(i), result);
-
-            inOrderTraversal(children.get(childCount - 1), result);
-        } else {
-            result.add(root);
+    
+    private List<KataNode<T>> recursePreOrder2(KataNode<T> node){
+        List<KataNode<T>> nodeList = new ArrayList<>();
+        nodeList.add(node.copy());
+        for(KataNode<T> child : node.getChildren()) {
+            nodeList.addAll(recursePreOrder2(child));
         }
+        return nodeList;
     }
-
+    
     /**
      * Gets a collection of nodes
-     * 
+     * Left Root Right
      * @return collection is provided in a inorder list formatting
      */
     public List<KataNode<T>> getInOrderList() {
-        var temp = new ArrayList<KataNode<T>>();
-        inOrderTraversal(this.root, temp);
-        var result = new ArrayList<KataNode<T>>();
-        for (var node : temp) {
-            result.add(copyNode(node));
-        }
-
-        return result;
+        return recurseInOrderList(root);
     }
 
-    private void inOrderTraversal(KataNode<T> root, List<KataNode<T>> result) {
-        if (root == null) return;
-        var children = root.getChildren();
-        if (!children.isEmpty()) {
-            var childCount = children.size();
-            for (var i = 0; i < childCount - 1; ++i)
-                inOrderTraversal(children.get(i), result);
-
-            result.add(root);
-            inOrderTraversal(children.get(childCount - 1), result);
-        } else {
-            result.add(root);
-        }
+    
+    private List<KataNode<T>> recurseInOrderList(KataNode<T> node){
+        List<KataNode<T>> nodeList = new ArrayList<>();
+        
+        List<KataNode<T>> children = node.getChildren();
+        if(children.size() > 0)
+            nodeList.addAll(recurseInOrderList(children.get(0)));
+        
+        nodeList.add(node.copy());
+        
+        for(int x = 1; x < children.size(); x++)
+            nodeList.addAll(recurseInOrderList(children.get(x)));
+        
+        return nodeList;
     }
-
+    
     /**
      * Gets a collection of nodes
-     * 
+     * Left Right Root
      * @return collection is provided in a postorder list formatting
      */
     public List<KataNode<T>> getPostOrderList() {
-        var temp = new ArrayList<KataNode<T>>();
-        postOrderTraversal(this.root, temp);
-        var result = new ArrayList<KataNode<T>>();
-        for (var node : temp) {
-            result.add(copyNode(node));
-        }
-
-        return result;
+        List<KataNode<T>> nodeList = new ArrayList<KataNode<T>>();
+        recursePostOrder(root, nodeList);
+        return nodeList;
     }
 
-    private void postOrderTraversal(KataNode<T> root, List<KataNode<T>> result) {
-        if (root == null) return;
-        var children = root.getChildren();
-        if (!children.isEmpty()) {
-            var childCount = children.size();
-            for (var i = 0; i < childCount - 1; ++i)
-                inOrderTraversal(children.get(i), result);
-
-            inOrderTraversal(children.get(childCount - 1), result);
-            result.add(root);
-        } else {
-            result.add(root);
+    private void recursePostOrder(KataNode<T> node, List<KataNode<T>> nodeList){
+        for(int x = 0; x < node.getChildren().size(); x++){
+            KataNode<T> child = (KataNode<T>) node.getChildren().get(x);
+            recursePostOrder(child, nodeList);
         }
+        nodeList.add(node.copy());
     }
-
+    
     /**
      * Gets a collection of nodes
-     * 
+     * Left -> Right Top to Bottom
      * @return collection is provided in a level order list formatting
      */
     public List<KataNode<T>> getLevelOrderList() {
-        var temp = new ArrayList<KataNode<T>>();
-        levelOrderTraversal(this.root, temp);
-        var result = new ArrayList<KataNode<T>>();
-        for (var node : temp) {
-            result.add(copyNode(node));
+        List<KataNode<T>> retNodes = new ArrayList<>();
+        Map<Integer, List<KataNode<T>>> nodes = new HashMap<>();
+        getLevelNodes(0, root, nodes);
+        for(int i = 0; i < depth; i++) {
+            retNodes.addAll(nodes.get(i));
         }
-
-        return result;
+        return retNodes;
     }
-    
-    private void levelOrderTraversal(KataNode<T> root, List<KataNode<T>> result) {
-        if (root == null) return;
-        
-        var queue = new LinkedList<KataNode<T>>();
-        queue.add(root);
-        
-        while (! queue.isEmpty()) {
-            var node = queue.removeFirst();
-            var children = node.getChildren();
-            
-            result.add(node);
-            
-            for (var child : children) 
-                queue.add(child);            
+    public void getLevelNodes(int depth, KataNode<T> node, Map<Integer, List<KataNode<T>>> nodes) {
+        List<KataNode<T>> l = nodes.get(depth);
+        if(l == null) {
+            l = new ArrayList<>();
         }
+        l.add(node.copy());
+
+        for(KataNode<T> n : node.getChildren()) {
+            getLevelNodes(depth + 1, n, nodes);
+        }
+        nodes.put(depth, l);
     }
 }
