@@ -91,4 +91,30 @@ public class DatabaseIntro {
         
         return data;
 	}
+	
+	/**
+	 * Retrieves the primary key for the provided table
+	 * @param tableName Table's primary key to locate
+	 * @return Column name of the primary key
+	 * @throws SQLException
+	 */
+	public String getPrimaryKeyColumn(String tableName) throws SQLException {
+		var primaryKeys = conn.getMetaData().getPrimaryKeys(null, null, tableName);        
+        return (primaryKeys.next()) ? primaryKeys.getString("COLUMN_NAME") : null;
+	}
+	
+	/**
+	 * Retrieves the names of all of the tables
+	 * @param schema Schema to filer.  All schemas if null
+	 * @return Collection of table names
+	 * @throws SQLException
+	 */
+	public List<String> listDatabaseTables(String schema) throws SQLException {
+		List<String> tables = new ArrayList<String>();
+        var tablesResultSet = conn.getMetaData().getTables(null, schema, "%", null);
+        while(tablesResultSet.next()) 
+            tables.add(tablesResultSet.getString("TABLE_NAME"));
+                
+        return tables;
+	}
 }
