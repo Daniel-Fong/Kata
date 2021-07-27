@@ -3,6 +3,8 @@ package com.smt.kata.distance;
 // Kata libs
 import com.smt.kata.distance.bean.CoordinateVO;
 
+import jakarta.validation.constraints.Min;
+
 /****************************************************************************
  * <b>Title</b>: MatrixRange.java
  * <b>Project</b>: SMT-Kata
@@ -43,6 +45,24 @@ public class MatrixRange {
 	 * @return number of coordinates outside the range
 	 */
 	public int getNumberElements(int[][] matrix, CoordinateVO start, CoordinateVO end) {
-		return matrix.length;
+		if (matrix == null || matrix.length == 0) return 0;
+		if (start == null || end == null) return 0;
+		if (start.getRow() > matrix.length || start.getRow() < 0 || end.getRow() > matrix.length || end.getRow() < 0) return 0;
+		int min = matrix[start.getRow()][start.getColumn()];
+		int max = matrix[end.getRow()][end.getColumn()];
+		if (min > max) {
+			int temp = min;
+			min = max;
+			max = temp;
+		}
+		int count = 0;
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] < min || matrix[i][j] > max) {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 }
