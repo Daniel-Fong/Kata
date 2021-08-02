@@ -50,6 +50,8 @@ public class DatabaseIntro {
 	 */
 	public Map<String, String> getTableMetaData(String tableName) throws SQLException {
 		Map<String, String> metaData = new LinkedHashMap<>();
+		
+		System.out.println(tableName);
         
         try (PreparedStatement stmt = conn.prepareStatement("select * from " + tableName)) {
             ResultSet rs = stmt.executeQuery();
