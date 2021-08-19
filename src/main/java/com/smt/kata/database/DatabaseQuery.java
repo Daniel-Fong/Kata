@@ -2,8 +2,12 @@ package com.smt.kata.database;
 
 // JDK 11.x
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +45,24 @@ public class DatabaseQuery {
 	 * @throws SQLException
 	 */
 	public List<Map<String, Object>> execute(String sql, List<Object> params) throws SQLException {
-		return new ArrayList<>();
+		List<Map<String, Object>> results = new ArrayList<>();
+        try(PreparedStatement ps = conn.prepareStatement(sql)) {
+            if(params != null && !params.isEmpty()) {
+                int i = 1;
+                for(Object o : params) {
+                    ps.setObject(i++, o);
+                }
+            }
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData meta = ps.getMetaData();
+            while(rs.next()) {
+                Map<String, Object> data = new LinkedHashMap<>();
+                for(int i = 1; i <= meta.getColumnCount(); i++) {
+                    data.put(meta.getColumnName(i), rs.getObject(i));
+                }
+                results.add(data);
+            }
+        }
+        return results;
 	}
 }

@@ -50,7 +50,35 @@ public class JsonParser {
 	 * @throws IOException 
 	 */
 	public Map<String, Object> parse(String json) throws IOException {
+		System.out.println(json);
+		String[] arr = json.split("{");
 		Map<String, Object> data = new HashMap<>();
+		for (int i = 0; i<arr.length; i++) {
+			String[] arr1 = arr[i].split(",");
+			for (int j = 0; j < arr1.length; j++) {
+				String key = "";
+				String value = "";
+				int keyStart = 0;
+				int keyEnd = 0;
+				boolean inKey = false;
+				String[] arr2 = arr1[j].split(":");
+				System.out.println(arr1[0]);
+				for (int k = 0; k < arr2[0].length(); k++) {
+					if (arr2[0].charAt(k) == '\'') {
+						if (!inKey) {
+							keyStart = k + 1;
+							inKey = true;
+						} else {
+							keyEnd = k - 1;
+						}
+					}
+				}
+				key = arr2[0].substring(keyStart, keyEnd);
+				value = arr2[1];
+				data.put(key, value);
+			}
+		}
+		
 
 		return data;
 	}

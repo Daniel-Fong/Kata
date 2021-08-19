@@ -63,6 +63,36 @@ public class WordMatrix {
 	 * @return
 	 */
 	public boolean contains(String phrase) {
-		return phrase.length() == 0;
+		if (phrase == null || phrase == "") {
+			return false;
+		}
+		for (int i = 0; i < matrix.length; i++) {
+			StringBuilder lr = new StringBuilder();
+			for (int j = 0; j < matrix[i].length; j++) {
+				lr.append(matrix[i][j] + "");
+			}
+			System.out.println(lr);
+			if (lr.toString().contains(phrase.toUpperCase())) {
+				return true;
+			}
+			String rl = lr.reverse().toString();
+			
+			if (rl.contains(phrase.toUpperCase())) {
+				return true;
+			}
+		for (int x = 0; x < matrix[0].length; x++) {
+			StringBuilder tb = new StringBuilder();
+			for (int y = 0; y < matrix.length; y++) {
+				tb.append(matrix[y][x] + "");
+			}
+			if (tb.toString().contains(phrase.toUpperCase())) {
+				return true;
+			}
+			String bt = tb.reverse().toString();
+			if (bt.contains(phrase.toUpperCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

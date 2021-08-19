@@ -42,7 +42,10 @@ public class AscendingNumbers {
 	 * @return
 	 */
 	public boolean isAscending(String sequence) {
-		
-		return sequence.equals("");
+		boolean ascending = false;
+		for (int i =0; i < sequence.length() / 2; i++) {
+			
+		}
+		return ascending;
 	}
 }

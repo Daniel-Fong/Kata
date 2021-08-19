@@ -1,5 +1,11 @@
 package com.smt.kata.word;
 
+import java.util.Arrays;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title</b>: OrderPlease.java
  * <b>Project</b>: SMT-Kata
@@ -36,6 +42,9 @@ public class OrderPlease {
 
 	
 	public String reorder(String phrase) {
-        return phrase;
+        return (phrase == null) ? "" : Arrays.stream(phrase.split(" "))
+        		.sorted((s1, s2) -> Integer.parseInt(StringUtils.defaultIfBlank(s1.replaceAll("[\\D]", ""), "0")) - (Integer.parseInt(StringUtils.defaultIfBlank(s2.replaceAll("[\\D]", ""), "0"))))
+        		.collect(Collectors.joining(" "))
+        		;
     }
 }

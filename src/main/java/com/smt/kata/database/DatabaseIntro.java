@@ -2,8 +2,12 @@ package com.smt.kata.database;
 
 // JDK 11.x
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +39,7 @@ public class DatabaseIntro {
 	 */
 	public DatabaseIntro(Connection conn) throws SQLException {
 		super();
+		this.conn = conn;
 	}
 
 	/**
@@ -44,7 +49,21 @@ public class DatabaseIntro {
 	 * @throws SQLException 
 	 */
 	public Map<String, String> getTableMetaData(String tableName) throws SQLException {
-		return null;
+		Map<String, String> metaData = new LinkedHashMap<>();
+		
+		System.out.println(tableName);
+        
+        try (PreparedStatement stmt = conn.prepareStatement("select * from " + tableName)) {
+            ResultSet rs = stmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numberOfColumns = rsmd.getColumnCount();
+            
+            for (int i=1; i <= numberOfColumns; i++) {
+                metaData.put(rsmd.getColumnName(i), rsmd.getColumnClassName(i));
+            }
+        }
+        
+        return metaData;
 	}
 	
 	/**
@@ -54,7 +73,25 @@ public class DatabaseIntro {
 	 * as the key and the value for each row as the value
 	 */
 	public List<Map<String, Object>> retrieveDataFromTable(String tableName) throws SQLException {
-		return null;
+		List<Map<String, Object>> data = new ArrayList<>();
+        
+        Map<String, String> metaData = this.getTableMetaData(tableName);
+        
+        try (PreparedStatement stmt = conn.prepareStatement("select * from " + tableName)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+            
+                while(rs.next()) {
+                    Map<String, Object> row = new LinkedHashMap<>();
+                    for (String column : metaData.keySet()) {
+                        row.put(column, rs.getObject(column));
+                    }
+                    
+                    data.add(row);
+                }
+            }
+        }
+        
+        return data;
 	}
 	
 	/**
@@ -64,7 +101,8 @@ public class DatabaseIntro {
 	 * @throws SQLException
 	 */
 	public String getPrimaryKeyColumn(String tableName) throws SQLException {
-		return null;
+		var primaryKeys = conn.getMetaData().getPrimaryKeys(null, null, tableName);        
+        return (primaryKeys.next()) ? primaryKeys.getString("COLUMN_NAME") : null;
 	}
 	
 	/**
@@ -74,6 +112,11 @@ public class DatabaseIntro {
 	 * @throws SQLException
 	 */
 	public List<String> listDatabaseTables(String schema) throws SQLException {
-		return new ArrayList<>();
+		List<String> tables = new ArrayList<String>();
+        var tablesResultSet = conn.getMetaData().getTables(null, schema, "%", null);
+        while(tablesResultSet.next()) 
+            tables.add(tablesResultSet.getString("TABLE_NAME"));
+                
+        return tables;
 	}
 }

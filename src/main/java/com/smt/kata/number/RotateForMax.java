@@ -32,14 +32,3 @@ package com.smt.kata.number;
  * @since May 30, 2021
  * @updates:
  ****************************************************************************/
-public class RotateForMax {
-
-	/**
-	 * Rotates each sequence of digits
-	 * @param input number to be rotated
-	 * @return
-	 */
-	public long rotate(long input) {
-        return input;
-    }
-}

@@ -43,6 +43,31 @@ public class ReverseWord {
 	 * @return
 	 */
 	public String processPhrase(String phrase) {
-		return phrase;
+		if (phrase == null) {
+			return "";
+		}
+		String result = "";
+		for (int i = 0; i<phrase.length(); i++) {
+			String word = "";
+			if (phrase.charAt(i) != ' ') {
+				
+				int counter = 0;
+				
+				if (i == phrase.length()-1) {
+					result = word + " " + result;
+					continue;
+				}		
+				else {
+					word += phrase.charAt(i);
+				}
+			}
+			if (phrase.charAt(i) == ' ') {
+				result = word + " " + result;
+				i ++;
+				break;
+			}
+		}
+		System.out.println(result);
+		return result.trim();
 	}
 }

@@ -36,6 +36,21 @@ public class ArrangeWord {
 	 * @param word
 	 * @return
 	 */
+	public List<String> getPermutations(String word) {
+		items = new ArrayList<>();
+		recur ("", word);
+		return items;
+	}
+	
+	public static void recur (String permutation, String word) {
+		if (word == "") {
+		}
+		for (int i = 0; i<word.length(); i++) {
+			char c = word.charAt(i);
+			String sub1= word.substring(0, i);
+			String sub2= word.substring(i, word.length()-i);
+		}
+	}
     public List<String> getPermutations(String word) {
         items = new ArrayList<>();
         

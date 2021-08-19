@@ -44,6 +44,27 @@ public class BinaryAsciiConverter {
 	 * @return
 	 */
 	public String convert(String binary) {
-		return binary;
+		String result = "";
+		if (binary == null || binary == "") {
+			return result;
+		}
+		String[] arr = new String[binary.length()/8];
+		for (int i=0; i<binary.length()/8; i++) {
+			arr[i] = binary.substring(i, 8);
+			i += 7;
+		}
+		for (int j=0; j<arr.length; j++) {
+			System.out.println(arr[j]);
+			int num = 0;
+			for (int k = 0; k<7; k++) {
+				if (arr[j].charAt(k) == '1') {
+					num += Math.pow(2, 7 - k);
+				}
+			}
+			System.out.println(num);
+			result += (char)num;
+		}
+		System.out.println(result);
+		return result;
 	}
 }

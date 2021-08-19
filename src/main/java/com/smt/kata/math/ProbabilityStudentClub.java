@@ -46,6 +46,8 @@ public class ProbabilityStudentClub {
 	
 	// Members
 	Logger logger = Logger.getLogger(ProbabilityStudentClub.class.getName());
+	private int count1 = 0;
+	private int count2 = 0;
 	
 	/**
 	 * Constructor.  Change as needed
@@ -54,6 +56,29 @@ public class ProbabilityStudentClub {
 		super();
 		System.setProperty("java.util.logging.SimpleFormatter.format","[%1$tF %1$tT] [%4$-7s] %5$s %n");
 		logger.log(Level.INFO, "Starting Application");
+		int i = 0;
+		while (i < 10) {
+			diceGame(0, 0, 6);
+			logger.log(Level.INFO, "The first probability took " + count1 + " rolls");
+			diceGame(0, 0, 5);
+			logger.log(Level.INFO, "The second probability took " + count2 + " rolls");
+			i++;
+		}
+		
+	}
+	
+	private void diceGame(int count, int lastRoll, int condition) {
+		int currentRoll = (int) ((Math.random()*6) + 1);
+		if (currentRoll == condition && lastRoll == 5) {
+			if (condition == 6) {
+				this.count1 = count + 1;
+			} else {
+				this.count2 = count + 1;
+			}
+			return;
+		} else {		
+			diceGame(count + 1, currentRoll, condition);
+		}
 	}
 	
 	/**
@@ -62,5 +87,6 @@ public class ProbabilityStudentClub {
 	 */
 	public static void main(String[] args) {
 		/** Entry Point Here **/
+		ProbabilityStudentClub club = new ProbabilityStudentClub();
 	}
 }

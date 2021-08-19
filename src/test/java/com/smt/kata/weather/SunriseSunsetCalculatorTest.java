@@ -58,16 +58,16 @@ class SunriseSunsetCalculatorTest {
 		Date d = DateFormat.formatDate(DatePattern.DATE_DASH, "2021-01-1");
 		SunriseSunsetCalculator calc = new SunriseSunsetCalculator(d, 41.6750889, -72.9224329);
 		assertEquals("OK", calc.getStatus());
-//		assertEquals("12:18:41 PM", calc.getResults().getSunrise());
-//		assertEquals("9:32:42 PM", calc.getResults().getSunset());
-//		assertEquals("4:55:41 PM", calc.getResults().getSolarNoon());
-//		assertEquals("09:14:01", calc.getResults().getDayLength());
-//		assertEquals("11:47:28 AM", calc.getResults().getCivilTwilightBegin());
-//		assertEquals("10:03:55 PM", calc.getResults().getCivilTwilightEnd());
-//		assertEquals("11:12:37 AM", calc.getResults().getNauticalTwilightBegin());
-//		assertEquals("10:38:46 PM", calc.getResults().getNauticalTwilightEnd());
-//		assertEquals("10:38:54 AM", calc.getResults().getAstronomicalTwilightBegin());
-//		assertEquals("11:12:29 PM", calc.getResults().getAstronomicalTwilightEnd());
+		assertEquals("12:18:41 PM", calc.getResults().getSunrise());
+		assertEquals("9:32:42 PM", calc.getResults().getSunset());
+		assertEquals("4:55:41 PM", calc.getResults().getSolarNoon());
+		assertEquals("09:14:01", calc.getResults().getDayLength());
+		assertEquals("11:47:28 AM", calc.getResults().getCivilTwilightBegin());
+		assertEquals("10:03:55 PM", calc.getResults().getCivilTwilightEnd());
+		assertEquals("11:12:37 AM", calc.getResults().getNauticalTwilightBegin());
+		assertEquals("10:38:46 PM", calc.getResults().getNauticalTwilightEnd());
+		assertEquals("10:38:54 AM", calc.getResults().getAstronomicalTwilightBegin());
+		assertEquals("11:12:29 PM", calc.getResults().getAstronomicalTwilightEnd());
 	}
 
 }

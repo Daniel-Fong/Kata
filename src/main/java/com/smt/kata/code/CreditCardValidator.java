@@ -1,4 +1,6 @@
 package com.smt.kata.code;
+import java.util.ArrayList;
+import java.util.List;
 
 /****************************************************************************
  * <b>Title</b>: CreditCardValidator.java
@@ -43,6 +45,37 @@ public class CreditCardValidator {
 	 * @return
 	 */
 	public boolean isValid(String ccn) {
-		return "".equals(ccn);
+		if (ccn == "" || ccn == null) {
+			return false;
+		}
+		if (!ccn.matches("\\d+")) {
+			return false;
+		}
+		int check = Integer.parseInt(Character.toString(ccn.charAt(ccn.length()-1)));
+		int[] arr = new int[ccn.length()-1];
+		for (int i = 0; i < ccn.length() - 1; i++) {
+			arr[arr.length - i - 1] = Integer.parseInt(ccn.charAt(i) + "");
+		}
+		int sum = 0;
+		for (int j = 0; j< arr.length; j++) {
+			if (j % 2 == 0) {
+				if (arr[j] * 2 > 9) {
+					String str = Integer.toString(arr[j] * 2);
+					sum += Integer.parseInt(str.charAt(0) + "") + Integer.parseInt(str.charAt(1) + "");
+				} else {	
+					sum += arr[j] * 2;
+				}
+			} else {
+				sum += arr[j];
+			}
+		}
+		String lastStr = Integer.toString(sum);
+		int last = Integer.parseInt(lastStr.charAt(lastStr.length() - 1) + "");
+		if (10 - last == check) {
+			return true;
+		} else {
+			return false;
+		}
 	}
+	
 }

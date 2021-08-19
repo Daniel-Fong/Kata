@@ -30,7 +30,25 @@ public class WordRank {
 	 * @return
 	 */
 	public String calculate(String phrase) {
+		if (phrase == null || phrase == "") {
+			return "";
+		}
+		String[] originalArr = phrase.split(" ");
+		String upper = phrase.toUpperCase();
+		String[] arr = upper.split(" ");
+		int max = 0;
+		String highest = "";
 		
-		return phrase;
+		for (int i=0; i<arr.length; i++) {
+			int temp = 0;
+			for (int j=0; j<arr[i].length(); j++) {
+				temp += arr[i].charAt(j) - 64;
+			}
+			if (temp > max) {
+				max = temp;
+				highest = originalArr[i];
+			}
+		}
+		return highest;
 	}
 }

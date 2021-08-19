@@ -23,11 +23,14 @@ import java.util.Map;
  * @updates:
  ****************************************************************************/
 public class SingleMinded {
+	
+	
 	/**
 	 * Returns a single instance of the single minded class
 	 * @return Instance of this class
 	 */
 	public static SingleMinded getInstance() {
+		
 		return null;
 	}
 	

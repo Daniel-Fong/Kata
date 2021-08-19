@@ -48,7 +48,14 @@ public class RotateMatrix {
 	 * @return Rotated matrix.  Empty matrix of input is null
 	 */
 	public int[][] rotateClockwise(int[][] matrix) {
-		return new int[0][0];
+		if (matrix == null || matrix.length == 0) return new int[0][0];
+		int[][] result = new int[matrix.length][matrix.length];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				result[j][matrix[i].length-1-i] = matrix[i][j];
+			}
+		}
+		return result;
 	}
 	
 	/**
@@ -57,6 +64,14 @@ public class RotateMatrix {
 	 * @return Rotated matrix.  Empty matrix of input is null
 	 */
 	public int[][] rotateCounterClockwise(int[][] matrix) {
-		return new int[0][0];
+		if (matrix == null || matrix.length == 0) return new int[0][0];
+		int[][] result = new int[matrix.length][matrix.length];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				result[matrix[j].length-j-1][i] = matrix[i][j];
+			}
+		}
+		return result;
 	}
+	
 }

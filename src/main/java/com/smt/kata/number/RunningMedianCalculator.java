@@ -44,7 +44,40 @@ public class RunningMedianCalculator {
 	 * @return
 	 */
 	public List<Double> getMedianValues(int[] values) {
-		return new ArrayList<>(values.length);
+		
+		List<Double> medianValues = new ArrayList<>();
+		if (values == null) {
+			return medianValues;
+		}
+		for (int i = 0; i < values.length; i++) {
+			int[] arr = new int[i + 1];
+			for (int x = 0; x < i+1; x++) {
+				arr[x] = values[x];
+			}
+			int temp = 0;
+			for (int j = 0; j < arr.length; j++) {
+				for(int k=1; k < (arr.length-j); k++){  
+                    if(arr[k-1] > arr[k]){  
+                        temp = arr[k-1];  
+                        arr[k-1] = arr[k];  
+                        arr[k] = temp;  
+                    }  
+                    
+				}  
+			}
+			for (int y = 0; y<arr.length; y++) {
+				System.out.println(arr[y]);
+			}
+			if (arr.length % 2 == 0) {
+				int num1 = arr[arr.length/2 - 1];
+				int num2 = arr[arr.length/2];
+				medianValues.add((double) (num1 + num2)/2);
+			}
+			else {
+				medianValues.add((double) arr[(int) Math.floor(arr.length/2)]);
+			}
+		}
+		return medianValues;
 	}
 
 }

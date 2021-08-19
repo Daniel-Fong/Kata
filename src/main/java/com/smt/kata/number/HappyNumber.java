@@ -41,6 +41,19 @@ public class HappyNumber {
 	 * @return True if the number is happy.  False otherwise
 	 */
 	public boolean isHappy(int val) {
-		return val == 0;
-	}
+        if(val == 1) {
+        	return true;
+        }
+        if(val == 4 || val <= 0) {
+        	return false;
+        }
+
+        int sum = 0;
+        char[] arr = String.valueOf(val).toCharArray();
+        for (int i = 0; i<arr.length; i++) {
+        	sum += Math.pow(Character.getNumericValue(arr[i]), 2);
+        }
+
+        return isHappy(sum);
+    }
 }

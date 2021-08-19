@@ -40,7 +40,15 @@ public class HarshadNumber {
 	 * @return
 	 */
 	public boolean isHarshad(int value) {
-		return value == 0;
+		if (value == 0) {
+			return false;
+		}
+		String str = (value + "");
+		int num = 0;
+		for (char ch : str.toCharArray()) {
+			num += Character.getNumericValue(ch);
+		}
+		return value % num == 0;
 	}
 
 }
