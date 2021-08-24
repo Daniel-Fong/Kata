@@ -1,5 +1,9 @@
 package com.smt.kata.data;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: SmallestElement.java
  * <b>Project</b>: SMT-Kata
@@ -39,7 +43,15 @@ public class SmallestElement {
 	 * @return value of the nth smallest element
 	 */
 	public int calculate(int[][] matrix, int index) {
-		return index;
+		if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) return 0;
+		List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				list.add(matrix[i][j]);
+			}
+		}
+		Collections.sort(list);
+		return list.get(index -1);
 	}
 
 }

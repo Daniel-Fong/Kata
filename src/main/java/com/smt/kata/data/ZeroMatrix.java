@@ -1,5 +1,8 @@
 package com.smt.kata.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: ZeroMatrix.java
  * <b>Project</b>: SMT-Kata
@@ -40,7 +43,26 @@ public class ZeroMatrix {
 	 * @return Matrix with the rows and columns updated
 	 */
 	public int[][] assign(int[][] matrix) {
+		if (matrix == null || matrix.length == 0) return new int[0][0];
+		if (matrix[0] == null) return new int[0][0];
 		// Return the updated matrix
+		List<Integer> columns = new ArrayList<>();
+		List<Integer> rows = new ArrayList<>();
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] == 0) {
+					rows.add(i);
+					columns.add(j);
+				}
+			}
+		}
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (columns.contains(j) || rows.contains(i)) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
 		return matrix;
 	}
 }
