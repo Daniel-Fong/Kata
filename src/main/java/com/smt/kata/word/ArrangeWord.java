@@ -31,17 +31,6 @@ public class ArrangeWord {
 		super();
 	}
 	
-	/**
-	 * Loads and returns the possible permutations of a word
-	 * @param word
-	 * @return
-	 */
-	public List<String> getPermutations(String word) {
-		items = new ArrayList<>();
-		recur ("", word);
-		return items;
-	}
-	
 	public static void recur (String permutation, String word) {
 		if (word == "") {
 		}
