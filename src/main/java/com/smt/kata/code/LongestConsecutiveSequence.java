@@ -35,6 +35,27 @@ public class LongestConsecutiveSequence {
 	 * @return Largest sequence of numbers in the array
 	 */
 	public int calculate(int[] items) {
-		return items.length;
+		if (items == null || items.length == 0) return 0;
+		for (int i = 0; i < items.length; i++) {
+			for (int j = 0; j < items.length - i - 1; j++) {
+				if (items[j] > items[j+1]) {
+					int temp = items[j];
+					items[j] = items[j + 1];
+					items[j+1] = temp;
+				}
+			}
+		}
+		int length = 0;
+        int result = length;
+        
+        for (int i = 0; i < items.length - 1; ++i) {
+            if (items[i] + 1 == items[i + 1]) {
+                ++length;
+                if (length > result) result = length;
+            }
+            else
+                length = 0;
+        }
+		return result + 1;
 	}
 }

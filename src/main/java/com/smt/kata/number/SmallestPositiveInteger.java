@@ -1,5 +1,10 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: SmallestPositiveInteger.java
  * <b>Project</b>: SMT-Kata
@@ -38,6 +43,12 @@ public class SmallestPositiveInteger {
 	 * @return smallest integer
 	 */
 	public int find(int[] arr) {
-		return arr[0];
+		if (arr == null || arr.length == 0) return 0;
+		Arrays.sort(arr);
+		int result = 1;
+		for (int i = 0; i < arr.length && arr[i] <= result; i++) {
+			result += arr[i];
+		}
+		return result;
 	}
 }
