@@ -4,6 +4,8 @@ package com.smt.kata.code;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title</b>: DecodeWays.java
  * <b>Project</b>: SMT-Kata
@@ -63,6 +65,31 @@ public class DecodeWays {
 	 * @return Collection of possible codes
 	 */
 	public List<String> encode(String code) {
-		return new ArrayList<>();
+		List<String> results = new ArrayList<>();
+		if (StringUtils.isEmpty(code)) return results;
+		findPattern(results, code, "");
+		for (String s : results) System.out.println(s);
+		return results;
+	}
+
+	public void findPattern (List<String> results, String code, String currentWord) {
+		if (code.length() == 0) {
+			results.add(currentWord);
+			return;
+		}
+		if (code.charAt(0) == '0') return;
+		int cur = Integer.parseInt(code.charAt(0)+"");
+		findPattern(results, code.substring(1), currentWord + (char)(64+cur));
+		
+		
+		if (code.length() > 1 && (cur == 1 || cur == 2)) {
+			int digit = Integer.parseInt((""+cur) + Integer.parseInt(code.charAt(1)+""));
+			if (digit > 26) return;
+			
+			findPattern(results, code.substring(2), currentWord + (char)(64+digit));
+			
+		}
+		
+		
 	}
 }

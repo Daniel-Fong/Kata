@@ -38,6 +38,17 @@ public class CostClimbingStairs {
 	 * @return Smallest cost to climb
 	 */
 	public int calculate(int[] costs) {
-		return costs.length;
+		if (costs == null || costs.length == 0) return 0;
+		if (costs.length == 1) return costs[0];
+		return Math.min(climbStairs(costs, 0, 0), climbStairs(costs, 1, 0));
+	}
+	
+	private int climbStairs(int[] costs, int pos, int total) {
+		if (pos >= costs.length) return total;
+
+		int stepOne = climbStairs(costs, pos + 1, total + costs[pos]);
+		int stepTwo = climbStairs(costs, pos + 2, total+costs[pos]);
+		
+		return Math.min(stepOne, stepTwo);
 	}
 }

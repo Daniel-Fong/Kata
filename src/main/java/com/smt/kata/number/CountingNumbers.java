@@ -1,5 +1,8 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: CountingNumbers.java
  * <b>Project</b>: SMT-Kata
@@ -43,6 +46,24 @@ public class CountingNumbers {
 	 * @return Number of smaller elements for each item in the source array
 	 */
 	public int[] calculate(int[] source) {
-		return source;
+		if (source == null || source.length == 0) return new int[0];
+		int index = 0;
+		int[] arr = new int[source.length];
+		for (int i = 0; i < source.length; i++) {
+			int count = 0;
+			if (i + 1 == source.length) {
+				index = 0;
+			} else {
+				index = i + 1;
+			}
+			
+			for (int j = index; j < source.length; j++) {
+				if (source[j] < source[i]) {
+					count ++;
+				}
+			}
+			arr[i] = count;
+		}
+		return arr;
 	}
 }

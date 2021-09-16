@@ -1,5 +1,8 @@
 package com.smt.kata.object;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 /****************************************************************************
  * <b>Title</b>: MatchstickToSquare.java
  * <b>Project</b>: SMT-Kata
@@ -39,8 +42,34 @@ public class MatchstickToSquare {
 	 * @return True if they form a square, false otherwise
 	 */
 	public boolean canFormSquare(int[] matchsticks) {
+		if (matchsticks == null || matchsticks.length < 4) return false;
+		int sum = IntStream.of(matchsticks).sum();
+		if (sum%4 != 0) return false;
+		int num = sum/4;
+		
+		boolean run = true;
+		
+		Arrays.sort(matchsticks);
+		
+		while (0 != IntStream.of(matchsticks).sum()) {
+			run = false;
+			int curTotal = num;
+			for (int i = matchsticks.length-1; i >= 0; i--) {
+				if (matchsticks[i] == 0) continue;
+				if (matchsticks[i] == num) {
+					matchsticks[i]=0;
+					
+				} else if (curTotal - matchsticks[i] >= 0) {
+					curTotal -= matchsticks[i];
+					matchsticks[i]=0;
+					if (curTotal == 0) run = true;
+				}
 				
-		return true;
+			}
+			if (!run) break;
+		}
+		return 0==IntStream.of(matchsticks).sum();
 	}
 
 }
+

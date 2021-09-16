@@ -1,5 +1,7 @@
 package com.smt.kata.data;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 /****************************************************************************
  * <b>Title</b>: MatchingSubsequence.java
  * <b>Project</b>: Daily-Kata
@@ -40,6 +42,27 @@ public class MatchingSubsequence {
 	 * @return Number of matches
 	 */
 	public int match(String source, String[] words) {
-		return words.length;
+		if (words == null || words.length == 0) return 0;
+		if (source == null || source.length() == 0) return 0;
+		source = source.toLowerCase();
+		int result = 0;
+		for (String word : words) {
+			if (word == null) continue;
+			int index = 0;
+			word = word.toLowerCase();
+			for (int i = 0; i < source.length(); i++) {
+				if (word.charAt(index) == source.charAt(i)) {
+					++index;
+					if (index >= word.length()) {
+						System.out.println("adding");
+						++result;
+						break;
+					}
+					continue;
+				}
+				System.out.println(word.charAt(index) + " | " + source.charAt(i));
+			}
+		}
+		return result;
 	}
 }

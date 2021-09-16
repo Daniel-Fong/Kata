@@ -50,7 +50,5 @@ public class TransposeMatrix {
 			
 		}
 		return result.substring(0, result.length() - 1);
-
-		return matrix[0][0];
 	}
 }

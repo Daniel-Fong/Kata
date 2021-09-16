@@ -93,6 +93,7 @@ public class WordMatrix {
 				return true;
 			}
 		}
+		}
 		return false;
 	}
 }

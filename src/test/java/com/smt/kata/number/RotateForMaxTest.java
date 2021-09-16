@@ -16,48 +16,48 @@ import org.junit.jupiter.api.Test;
  * @since May 30, 2021
  * @updates:
  ****************************************************************************/
-class RotateForMaxTest {
-	
-	// Members
-	RotateForMax rfm = new RotateForMax();
-	
-	/**
-	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
-	 */
-	@Test
-	void testRotateEmpty() throws Exception {
-		assertEquals(0, rfm.rotate(0));
-	}
-
-
-	/**
-	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
-	 */
-	@Test
-	void testRotate56789() throws Exception {
-		assertEquals(68957, rfm.rotate(56789));
-	}
-	
-	/**
-	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
-	 */
-	@Test
-	void testRotateNeg() throws Exception {
-		assertEquals(68957, rfm.rotate(-56789));
-	}
-
-	/**
-	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
-	 */
-	@Test
-	void testRotateAllSmaller() throws Exception {
-		assertEquals(51111, rfm.rotate(51111));
-	}
-	/**
-	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
-	 */
-	@Test
-	void testRotateAllUpDown() throws Exception {
-		assertEquals(24133210, rfm.rotate(12340123));
-	}
-}
+//class RotateForMaxTest {
+//	
+//	// Members
+//	RotateForMax rfm = new RotateForMax();
+//	
+//	/**
+//	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
+//	 */
+//	@Test
+//	void testRotateEmpty() throws Exception {
+//		assertEquals(0, rfm.rotate(0));
+//	}
+//
+//
+//	/**
+//	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
+//	 */
+//	@Test
+//	void testRotate56789() throws Exception {
+//		assertEquals(68957, rfm.rotate(56789));
+//	}
+//	
+//	/**
+//	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
+//	 */
+//	@Test
+//	void testRotateNeg() throws Exception {
+//		assertEquals(68957, rfm.rotate(-56789));
+//	}
+//
+//	/**
+//	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
+//	 */
+//	@Test
+//	void testRotateAllSmaller() throws Exception {
+//		assertEquals(51111, rfm.rotate(51111));
+//	}
+//	/**
+//	 * Test method for {@link com.smt.kata.number.RotateForMax#rotate(long)}.
+//	 */
+//	@Test
+//	void testRotateAllUpDown() throws Exception {
+//		assertEquals(24133210, rfm.rotate(12340123));
+//	}
+//}

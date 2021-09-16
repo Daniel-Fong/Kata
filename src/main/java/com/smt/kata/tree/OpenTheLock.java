@@ -1,5 +1,7 @@
 package com.smt.kata.tree;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: OpenTheLock.java
  * <b>Project</b>: SMT-Kata
@@ -57,6 +59,78 @@ public class OpenTheLock {
 	 * @return Number of moves.  -1 if it can't be accomplished
 	 */
 	public int calculatePath(String[] deadends, String target) {
-        return -1;
+		char[] code = new char[]{'0','0','0','0'};
+		int moves = 0;
+		int failDigit=-1;
+		int curDigit=0;
+
+		if (!isPossible(deadends, target)) return -1;
+		
+		while(true) {
+			if (curDigit > 3) { 
+				curDigit = 0;
+				failDigit++;
+			}
+			System.out.print(code);
+			System.out.println("|"+target);
+			if (new String(code).equals(target)) return moves;
+			if (curDigit == failDigit) curDigit++;
+			System.out.println(String.valueOf(code[curDigit]));
+			int current = Integer.parseInt(String.valueOf(code[curDigit]));
+			
+			if (current == Integer.parseInt(String.valueOf(target.charAt(curDigit)))) {
+				curDigit++;
+				continue;
+			}
+
+			System.out.println(current);
+			int direction = getMoves(current, Integer.parseInt(String.valueOf(target.charAt(curDigit))));	
+			
+			int movedDigit = current + direction;
+			if (movedDigit == 10) movedDigit = 0;
+			if (movedDigit == -1) movedDigit = 9;
+
+			System.out.println((char)movedDigit);
+			code[curDigit] = Character.forDigit(movedDigit, 10);
+			
+			for (String s : deadends) {
+				if (s.equals(new String(code))) {
+					System.out.println("breaking on " + s);
+					code[curDigit] = Character.forDigit(current, 10);
+					curDigit = 0;
+					failDigit++;
+					moves++;
+					
+					code[curDigit] = Character.forDigit(Integer.parseInt(String.valueOf(code[curDigit]))+1, 10);
+					if (failDigit > 3) return -1;
+					continue;
+				}
+			}
+			moves++;
+			
+			if (movedDigit == Integer.parseInt(String.valueOf(target.charAt(curDigit))))
+				curDigit++;
+		}
     }
+
+	private int getMoves(int charAt, int charAt2) {
+		if(charAt2 - charAt > 5) {
+			return -1;
+		} else {
+			return 1;		
+		}
+	}
+
+	public boolean isPossible(String[] deadends, String target) {
+		for (int i = 0; i < target.length(); i++) {
+			String higher = target.substring(0, i) + (Character.getNumericValue(target.charAt(i)) == 9 ? 0 : (Character.getNumericValue(target.charAt(i)) + 1) + target.substring(i, 3));
+			String lower = target.substring(0, i) + (Character.getNumericValue(target.charAt(i)) == 0 ? 9 : (Character.getNumericValue(target.charAt(i)) - 1) + target.substring(i, 3));
+			// System.out.println(higher + "|" + lower);
+			if (!Arrays.asList(deadends).contains(higher) || !Arrays.asList(deadends).contains(lower)) return true;
+		}
+				
+		return false;
+	}
+
+	
 }
