@@ -56,7 +56,36 @@ public class RangeSumQuery {
 	 * @return Sum of all cells inside the rectangles
 	 */
 	public int sumRange(List<Rectangle> areas) {
-		return areas.size();
+		if ( areas.size() == 0 || this.matrix == null || this.matrix.length == 0 || this.matrix[0] == null || this.matrix[0].length == 0) return 0;
+		if (areas.size() == 1) {
+			return getSum(areas.get(0));
+		} else {
+			Rectangle box1 = areas.get(0);
+			Rectangle box2 = areas.get(1);
+			int sum = 0;
+			int minus = 0;
+			if (box1.bottomRight.getColumn() >= box2.topLeft.getColumn() && box1.bottomRight.getRow() >= box2.topLeft.getRow()) {
+				Rectangle negative = new Rectangle(box2.topLeft, box1.bottomRight);
+				minus = getSum(negative);
+			}
+			for (Rectangle rect : areas) {
+				sum += getSum(rect);
+			}
+			return sum - minus;
+		}
+	}
+	
+	public int getSum(Rectangle box) {
+		if (box.bottomRight.getColumn() > matrix[0].length -1) box.bottomRight.setColumn(matrix[0].length-1);
+		if (box.bottomRight.getRow() > matrix.length-1) box.bottomRight.setRow(matrix.length-1);
+		int sum = 0;
+		for (int i = box.topLeft.getColumn(); i <= box.bottomRight.getColumn(); i++) {
+			for (int j = box.topLeft.getRow(); j <= box.bottomRight.getRow(); j++) {
+				System.out.println(this.matrix[j][i]);
+				sum += this.matrix[j][i];
+			}
+		}
+		return sum;
 	}
 
 }

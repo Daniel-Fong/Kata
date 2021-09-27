@@ -4,6 +4,8 @@ package com.smt.kata.code;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 /****************************************************************************
  * <b>Title</b>: PhoneNumberCombos.java
  * <b>Project</b>: SMT-Kata
@@ -38,6 +40,8 @@ import java.util.List;
  ****************************************************************************/
 public class PhoneNumberCombos {
 	
+	private List<String> results = new ArrayList<String>();
+	
 	/**
 	 * Map with the digits to it's character options.  Array location matches the digit value
 	 */
@@ -51,6 +55,39 @@ public class PhoneNumberCombos {
 	 * @return Collection of all of the permutations
 	 */
 	public List<String> calculate(String digits) {
-		return new ArrayList<>();
+		if (digits == null || digits.length() == 0) return new ArrayList<String>();
+		List<String> words = new ArrayList<>();
+		for (char c : digits.toCharArray()) {
+			if (c < '0' || c > '9') return new ArrayList<String>();
+			words.add(DIGIT_MAP[Integer.parseInt(c + "")]);
+		}
+		
+		recurse(words, "", 0);
+		return this.results;
+		
+//		for (int i = 0; i < digits.length(); i++) {
+//			if (digits.charAt(i) < '0' || digits.charAt(i) > '9') return new ArrayList<String>();
+//			List<String> newList = new ArrayList<String>();
+//			String str = DIGIT_MAP[Integer.parseInt(digits.charAt(i) + "")];
+//			for (int j = 0; j < str.length(); j++) {
+//				if (results.size() == 0) newList.add(str.charAt(j)+"");
+//				for (String result : results) {
+//					newList.add(result + str.charAt(j) + "");
+//				}
+//			}
+//			results = newList;
+//		}
+//		for (String res : results) System.out.println(res);
+//		return results;
+	}
+	
+	public void recurse(List<String> words, String cur, int index) {
+		if (index == words.size()) {
+			results.add(cur);
+			return;
+		}
+		for (char c : words.get(index).toCharArray()) {
+			recurse(words, cur + c, index + 1);
+		}
 	}
 }
