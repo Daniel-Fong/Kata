@@ -1,5 +1,8 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: OriginalDigits.java
  * <b>Project</b>: SMT-Kata
@@ -30,11 +33,23 @@ package com.smt.kata.number;
  ****************************************************************************/
 public class OriginalDigits {
 	
+	private List<String> list = new ArrayList<>();
+	
 	/**
 	 * Initializes the class 
 	 */
 	public OriginalDigits() {
 		super();
+		list.add("zero");
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+		list.add("five");
+		list.add("six");
+		list.add("seven");
+		list.add("eight");
+		list.add("nine");
 	}
 	
 	/**
@@ -43,6 +58,30 @@ public class OriginalDigits {
 	 * @return Digits in order
 	 */
 	public String calculate(String source) {
-		return source;
+		if (source == null || source.length() == 0) return "";
+		source = source.toLowerCase();
+		String result = "";
+		StringBuilder copy = new StringBuilder();
+		copy.append(source);
+		for (String num : list) {
+			boolean isIn = true;
+			for (char c : num.toCharArray()) {
+				if (!source.contains(c + "")) {
+					isIn = false;
+				}
+			}
+			if (isIn) {
+				boolean delete = false
+				for (char c : num.toCharArray()) {
+					if (copy.indexOf(c + "") > -1) {
+						copy.deleteCharAt(copy.indexOf(c + ""));
+					} else ()
+					
+					System.out.println(copy);
+				}
+				result += list.indexOf(num);
+			}
+		}
+		return result;
 	}
 }

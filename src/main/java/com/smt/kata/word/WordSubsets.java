@@ -4,6 +4,8 @@ package com.smt.kata.word;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title</b>: WordSubsets.java
  * <b>Project</b>: SMT-Kata
@@ -63,6 +65,31 @@ public class WordSubsets {
 	 * @return Collection of words that match the patterns
 	 */
 	public List<String> find(String[] words, String[] searchVal) {
-		return new ArrayList<>();
+		if (words == null || words.length == 0 || searchVal == null || searchVal.length == 0) return new ArrayList<>();
+		List<String> result = new ArrayList<>();
+		for (String word : words) {
+			if (word == null) break;
+			word = word.toLowerCase();
+			boolean universal = true;
+			for (String search : searchVal) {
+				if (search == null) break;
+				search = search.toLowerCase();
+				StringBuilder copy = new StringBuilder();
+				copy.append(word.toLowerCase());
+				char[] arr = search.toCharArray();
+				for (var c : arr) {
+					if (copy.toString().contains(c + "")) {
+						copy.deleteCharAt(copy.indexOf(c + ""));
+					} else {
+						universal = false;
+						break;
+					}
+				}
+			}
+			if (universal) {
+				result.add(word);
+			}
+		}
+		return result;
 	}
 }

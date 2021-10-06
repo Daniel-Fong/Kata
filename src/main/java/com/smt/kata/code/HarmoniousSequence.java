@@ -1,5 +1,8 @@
 package com.smt.kata.code;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /****************************************************************************
  * <b>Title</b>: HarmoniousSequence.java
  * <b>Project</b>: SMT-Kata
@@ -47,6 +50,30 @@ public class HarmoniousSequence {
 	 * @return total items in the harmonious sequence
 	 */
 	public int getLongest(int[] sequence) {
-		return sequence.length;
+		int length = 0;
+		if (sequence == null || sequence.length <= 1) return length;
+		Map<Integer, Integer> map = new HashMap<>();
+		for (int num : sequence) {
+			if (map.containsKey(num)) {
+				map.put(num, map.get(num) + 1);
+			} else {
+				map.put(num, 1);
+			}
+		}
+		for (int key : map.keySet()) {
+			if (map.containsKey(key + 1)) {
+				int sum = map.get(key) + map.get(key + 1);
+				if (sum > length) {
+					length = sum;
+				}
+			}
+			if (map.containsKey(key - 1)) {
+				int sum = map.get(key) + map.get(key - 1);
+				if (sum > length) {
+					length = sum;
+				}
+			}
+		}
+		return length;
 	}
 }

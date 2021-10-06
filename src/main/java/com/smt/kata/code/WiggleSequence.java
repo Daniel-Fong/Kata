@@ -1,5 +1,9 @@
 package com.smt.kata.code;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: WiggleSequence.java
  * <b>Project</b>: SMT-Kata
@@ -54,6 +58,28 @@ public class WiggleSequence {
 	 * @return Number of wiggles in the sequence
 	 */
 	public int count(int[] sequence) {
-		return sequence.length;
+		if (sequence == null || sequence.length < 2 || (sequence[0] + "" == null)) return 0;
+		boolean positive = true;
+		if (sequence[1] - sequence[0] < 0) positive = false;
+		if (sequence[1] - sequence[0] > 0) positive = true;
+		int count = 2;
+		for (int i = 1; i < sequence.length - 1; i++) {
+			if (sequence[i+1] < sequence[i]) {
+				if (positive) {
+					positive = false;
+					count ++;
+				} else {
+					continue;
+				}
+			} else {
+				if (!positive) {
+					positive = true;
+					count++;
+				} else {
+					continue;
+				}
+			}
+		}
+		return count;
 	}
 }
