@@ -1,5 +1,10 @@
 package com.smt.kata.security;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /****************************************************************************
  * <b>Title</b>: WeakestRow.java
  * <b>Project</b>: Daily-Kata
@@ -68,6 +73,36 @@ public class WeakestRow {
 	 * @return int array with the row ids of the weakest rows
 	 */
 	public int[] find(int[][] matrix, int k) {
-		return matrix[0];
+		if (matrix == null || matrix.length == 0 || matrix[0] == null || k <= 0 || k > matrix.length) return new int[0];
+		List<Integer> list = new ArrayList<>();
+		
+		int[] result = new int[k];
+		for (int i = 0; i < matrix.length; i++) {
+			int sum = 0;
+			for (int num : matrix[i]) {
+				sum += num;
+			}
+			list.add(sum);
+		}
+		List<Integer> used = new ArrayList<>();
+		for (int j = 0; j < k; j++) {
+			int weakest = 0;
+			int index = 0;
+			for (int l = 0; l < list.size(); l++) {
+				if (used.contains(l)) continue;
+				else if (list.get(l) == 0) {
+					index = l;
+					break;
+				}
+				else if (weakest == 0 || list.get(l) < weakest) {
+					weakest = list.get(l);
+					index = l;
+				} 
+			}
+			used.add(index);
+			result[j] = index;
+			
+		}
+		return result;
 	}
 }

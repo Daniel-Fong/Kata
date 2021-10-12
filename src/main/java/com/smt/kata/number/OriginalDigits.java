@@ -71,11 +71,13 @@ public class OriginalDigits {
 				}
 			}
 			if (isIn) {
-				boolean delete = false
+				boolean delete = false;
 				for (char c : num.toCharArray()) {
 					if (copy.indexOf(c + "") > -1) {
 						copy.deleteCharAt(copy.indexOf(c + ""));
-					} else ()
+					} else {
+						
+					}
 					
 					System.out.println(copy);
 				}

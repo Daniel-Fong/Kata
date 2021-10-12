@@ -1,5 +1,9 @@
 package com.smt.kata.data;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: SortMatrixDiagonally.java
  * <b>Project</b>: SMT-Kata
@@ -47,6 +51,40 @@ public class SortMatrixDiagonally {
 	 * @return A sorted matrix
 	 */
 	public int[][] sort(int[][] matrix) {
-		return matrix;
+		if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) return new int[0][0];
+		List<Integer> list = new ArrayList<>();
+		for (int[] arr : matrix) {
+			for (int num : arr) {
+				list.add(num);
+			}
+		}
+		Collections.sort(list);
+		int[][] result = new int[matrix.length][matrix[0].length];
+		int lowestX = 0;
+		int lowestY = 0;
+		int x = 0;
+		int y = matrix.length - 1;
+		boolean lateral = false;
+		for (int num : list) {
+			result[y][x] = num;
+			if (lateral) {
+				if (x + 1 < matrix[0].length) ++x;
+				else {
+					lateral = false;
+					++lowestY;
+					y = matrix.length - 1;
+					x = lowestX;
+				}
+			} else {
+				if (y > lowestY) --y;
+				else {
+					lateral = true;
+					++lowestX;
+					x = lowestX;
+					y = lowestY;
+				}
+			}
+		}
+		return result;
 	}
 }
