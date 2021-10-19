@@ -1,5 +1,9 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: MaximumXOR.java
  * <b>Project</b>: SMT-Kata
@@ -28,6 +32,15 @@ public class MaximumXOR {
 	 * array < 2 elements ...)
 	 */
 	public int calculate(int[] numbers) {
-		return numbers.length;
+		if (numbers == null || numbers.length <= 1) return 0;
+		List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < numbers.length -1; i++) {
+			for (int j=i+1; j < numbers.length; j++) {
+				list.add(numbers[i]^numbers[j]);
+			}
+		}
+		Collections.sort(list);
+		Collections.reverse(list);
+		return list.get(0);
 	}
 }

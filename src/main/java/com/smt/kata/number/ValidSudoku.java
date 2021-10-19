@@ -1,5 +1,10 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title</b>: ValidSudoku.java
  * <b>Project</b>: SMT-Kata
@@ -66,6 +71,32 @@ public class ValidSudoku {
 	 * @return True if the values are valid.  False otherwise
 	 */
 	public boolean isValid(String[][] board) {
-		return board == null;
+		if (board == null || board.length == 0) return false;
+		for (String[] row : board) {
+			List<String> list = new ArrayList<>();
+			for (String str : row) {
+				if (StringUtils.isNumeric(str)) {
+					if (list.contains(str)) {
+						return false;
+					} else {
+						list.add(str);
+					}
+				}
+			}
+		}
+		for (int i = 0; i < board[0].length; i++) {
+			List<String> list = new ArrayList<>();
+			for (int j = 0; j < board.length; j ++) {
+				String str = board[j][i];
+				if (StringUtils.isNumeric(str)) {
+					if (list.contains(str)) {
+						return false;
+					} else {
+						list.add(str);
+					}
+				}
+			}
+		}
+		return true;
 	}
 }

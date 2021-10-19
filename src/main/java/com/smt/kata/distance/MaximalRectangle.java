@@ -1,5 +1,9 @@
 package com.smt.kata.distance;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: MaximalRectangle.java
  * <b>Project</b>: SMT-Kata
@@ -44,6 +48,7 @@ package com.smt.kata.distance;
  * @updates:
  ****************************************************************************/
 public class MaximalRectangle {
+	List<Integer> list = new ArrayList<>();
 
 	/**
 	 * Calculates the largest rectangle of all ones
@@ -51,6 +56,31 @@ public class MaximalRectangle {
 	 * @return Count of all of the "1"s in the rectangle
 	 */
 	public int calculate(int[][] matrix) {
-		return matrix.length;
+		if (matrix == null || matrix.length == 0) return 0;
+		for (int y = 0; y < matrix.length; y++) {
+			for (int x = 0; x < matrix[0].length; x++) {
+				findRectangles(matrix, x, y, x, y, 0);
+			}
+		}
+		Collections.sort(list);
+		Collections.reverse(list);
+		return list.isEmpty() ? 0 : list.get(0);
+	}
+	
+	public void findRectangles(int[][] matrix, int startX, int startY, int endX, int endY, int count) {
+		if (matrix[startY][startX] == 0) return;
+		for (int y = startY; y <= endY; y++) {
+			for (int x = startX; x <= endX; x++) {
+				if (matrix[y][x] < 1) {
+					list.add(count);
+					return;
+				}
+			}
+		}
+		int area = (endX - startX + 1) * (endY - startY + 1);
+		if (endY + 1 < matrix.length) findRectangles(matrix, startX, startY, endX, endY+1, area);
+		if (endX + 1 < matrix[0].length) findRectangles(matrix, startX, startY, endX + 1, endY, area);
+		if (endY + 1 >= matrix.length && endX + 1 >= matrix[0].length) list.add(area);
+		return;
 	}
 }

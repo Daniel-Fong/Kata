@@ -1,5 +1,10 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: MaxKSumPairs.java
  * <b>Project</b>: SMT-Kata
@@ -36,7 +41,7 @@ package com.smt.kata.number;
  * @updates:
  ****************************************************************************/
 public class MaxKSumPairs {
-	
+	private int count = 0;
 	/**
 	 * In one operation, you can pick two numbers from the array whose sum equals k 
  	 * and remove them from the array.
@@ -46,6 +51,18 @@ public class MaxKSumPairs {
 	 */
 	public int calculate(int[] source, int target) {
 		// Validate the data
-		return source.length + target;
+		if (source == null || source.length == 0 || target == 0) return 0;
+		List<Integer> list = new ArrayList<>();
+		for (int num : source) list.add(num);
+		Collections.sort(list);
+		Collections.reverse(list);
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i) > target) continue;
+			else if (list.get(i) == target) {
+				++count;
+				list.remove(i);
+			}
+		}
+		return count;
 	}
 }
