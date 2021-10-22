@@ -1,5 +1,9 @@
 package com.smt.kata.code;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /****************************************************************************
  * <b>Title</b>: IndexMatcher.java
  * <b>Project</b>: SMT-Kata
@@ -31,7 +35,7 @@ public class IndexMatcher {
 	 * @return True if there is a match.  False otherwise
 	 */
 	public boolean hasMatch(int[] values) {
-		return values == null;
+		return (values == null || values.length == 0) ? false : IntStream.range(0, values.length).filter(x -> values[x] == x).count() > 0;
 	}
 
 }
