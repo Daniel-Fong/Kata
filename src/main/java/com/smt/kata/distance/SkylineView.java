@@ -1,5 +1,11 @@
 package com.smt.kata.distance;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: SkylineView.java
  * <b>Project</b>: SMT-Kata
@@ -35,7 +41,21 @@ public class SkylineView {
 	 * @return Number of buildings with a view
 	 */
 	public int getNumViewsBackwards(int[] buildings) {
-		return buildings.length;
+		if (ArrayUtils.isEmpty(buildings)) return 0;
+		else if (buildings.length < 2) return 1;
+		int result = 0;
+		int count = 0;
+		int highest = 0;
+		for (int i = buildings.length - 1; i >= 0; i--) {
+			System.out.println("height = " + buildings[i]);
+			if (buildings[i] > highest) {
+				++count;
+				if (count > result) result = count;
+				highest = buildings[i];
+			} 
+			System.out.println("count " + count + " highest " + highest);
+		}
+		return result;
 	}
 	
 	/**
@@ -44,7 +64,36 @@ public class SkylineView {
 	 * @return Number of buildings with a view
 	 */
 	public int getNumViewsForward(int[] buildings) {
-		return buildings.length;
+		if (ArrayUtils.isEmpty(buildings)) return 0;
+		else if (buildings.length < 2) return 1;
+		int result = 0;
+		int count = 1;
+		int highest = 0;
+		int lowest = 0;
+		for (int i = 0; i < buildings.length; i++) {
+			if (lowest == 0) {
+				if (buildings[i] > highest) {
+					highest = buildings[i];
+				} else if (buildings[i] < highest) {
+					++count;
+					if (count > result) result = count;
+					lowest = buildings[i];
+				}
+			} else {
+				if (buildings[i] < highest && buildings[i] > lowest) {
+					lowest = buildings[i];
+				} else if (buildings[i] < lowest) {
+					++count;
+					if (count > result) result = count;
+				} else if (buildings[i] == highest) {
+					if (count > result) result = count;
+					count = 1;
+					lowest = 0;
+				}
+			}
+			if (count > result) result = count;
+		}
+		return result;
 	}
 
 }
