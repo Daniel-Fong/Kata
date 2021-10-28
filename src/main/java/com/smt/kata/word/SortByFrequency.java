@@ -1,4 +1,10 @@
 package com.smt.kata.word;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.function.Function;
 
 /****************************************************************************
  * <b>Title</b>: SortByFrequency.java
@@ -42,7 +48,13 @@ public class SortByFrequency {
 	 * @return characters sorted by the number of times they appear in the word
 	 */
 	public String sort(String word) {
-		return word;
+		return word == null || word.length() == 0 ? "" : Arrays.asList(word.toLowerCase()).stream().flatMap(a -> a.chars().mapToObj(c -> (char) c))
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+				.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+						(oldValue, newValue) -> oldValue, LinkedHashMap::new)).keySet()
+				.stream().map(key -> key + "")
+				.collect(Collectors.joining());
 	}
 
 }
