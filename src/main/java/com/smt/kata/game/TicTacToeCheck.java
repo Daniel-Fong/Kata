@@ -1,5 +1,10 @@
 package com.smt.kata.game;
 
+import java.util.List;
+ import java.util.ArrayList;
+
+import com.smt.kata.distance.bean.CoordinateVO;
+
 /****************************************************************************
  * <b>Title</b>: TicTacToeCheck.java
  * <b>Project</b>: SMT-Kata
@@ -62,6 +67,8 @@ package com.smt.kata.game;
  * @updates:
  ****************************************************************************/
 public class TicTacToeCheck {
+	
+	private List<List<CoordinateVO>> winners;
 
 	/**
 	 * Identifies the players of the game
@@ -73,6 +80,36 @@ public class TicTacToeCheck {
 		public String getLabel() { return label; }
 		Player(String label) { this.label = label; }
 	}
+	
+	public TicTacToeCheck() {
+		winners = new ArrayList<>();
+		
+		for (int i = 0; i < 3; i++) {
+			List<CoordinateVO> con = new ArrayList<>();
+			con.add(new CoordinateVO(i, 0));
+			con.add(new CoordinateVO(i, 1));
+			con.add(new CoordinateVO(i, 2));
+			winners.add(con);
+			
+			con = new ArrayList<>();
+			con.add(new CoordinateVO(0, i));
+			con.add(new CoordinateVO(1, i));
+			con.add(new CoordinateVO(2, i));
+			winners.add(con);
+		}
+		
+		List<CoordinateVO> leftDiagonal = new ArrayList<>();
+		leftDiagonal.add(new CoordinateVO(0, 0));
+		leftDiagonal.add(new CoordinateVO(1, 1));
+		leftDiagonal.add(new CoordinateVO(2, 2));
+		winners.add(leftDiagonal);
+		
+		List<CoordinateVO> rightDiagonal = new ArrayList<>();
+		rightDiagonal.add(new CoordinateVO(0, 2));
+		rightDiagonal.add(new CoordinateVO(1, 1));
+		rightDiagonal.add(new CoordinateVO(2, 0));
+		winners.add(rightDiagonal);
+	}
 
 	/**
 	 * Evaluates a Tic-Tac-Toe board based upon the moves provided
@@ -80,6 +117,44 @@ public class TicTacToeCheck {
 	 * @return Player A or B if a player won.  Player N if no winner
 	 */
 	public Player evaluate(int[][] moves) {
-		return Player.N;
+		if (moves == null || moves.length == 0 || moves[0] == null || moves[0].length == 0) return  Player.N;
+		
+		List<CoordinateVO> listA = new ArrayList<>();
+		List<CoordinateVO> listB = new ArrayList<>();
+		boolean playerA = true;
+		for (int[] move : moves) {
+			CoordinateVO coord = new CoordinateVO(move[0], move[1]);
+			if (playerA) {
+				listA.add(coord);
+				playerA = false;
+			} else {
+				listB.add(coord);
+				playerA = true;
+			}
+		}
+		if (checkWin(listA)) {
+			return Player.A;
+		} else if (checkWin(listB)) {
+			return Player.B;
+		} else {
+			return Player.N;
+		}
 	}
+	
+	private boolean checkWin(List<CoordinateVO> moves) {
+		
+		for (List<CoordinateVO> winCon: winners) {
+			boolean winner = true;
+			for (CoordinateVO c : winCon) {
+				if (!moves.contains(c)) {
+					winner = false;
+					break;
+				}
+			}
+			if (winner) return true;
+		}
+		
+		return false;
+	}
+
 }

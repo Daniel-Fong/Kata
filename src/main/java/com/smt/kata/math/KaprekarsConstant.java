@@ -1,5 +1,11 @@
 package com.smt.kata.math;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.hibernate.internal.build.AllowSysOut;
+
 /****************************************************************************
  * <b>Title</b>: KaprekarsConstant.java
  * <b>Project</b>: SMT-Kata
@@ -38,6 +44,29 @@ public class KaprekarsConstant {
 	 * @return the number of steps to acheive the number
 	 */
 	public int calculateSteps(int num) {
-		return num;
+		if (num < 1000 || num > 9998) return 0;
+		int x = num;
+		String str = x + "";
+		char first = str.charAt(0);
+		boolean dupe = true;
+		for (int i = 1; i < str.length(); i++) {
+			if (str.charAt(i) != first) dupe = false;
+		}
+		if (dupe == true) return 0;
+		int count = 0;
+		
+		while (x != 6174) {
+			String str1 = x + "";
+			List<String> ascending = Arrays.asList(str1.split(""));
+			Collections.sort(ascending);
+			List<String> descending = Arrays.asList(str1.split(""));
+			Collections.sort(descending);
+			Collections.reverse(descending);
+			int d = Integer.parseInt(String.join("", descending));
+			int a = Integer.parseInt(String.join("", ascending));
+			x = d - a;
+			++count;
+		}
+		return count;
 	}
 }
