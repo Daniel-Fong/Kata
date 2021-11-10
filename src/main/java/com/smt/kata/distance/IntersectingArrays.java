@@ -49,7 +49,41 @@ public class IntersectingArrays {
 	 * @return Array of the intersected values
 	 */
 	public Integer[] intersectNoCollections(Integer[] one, Integer[] two) {
-		return two;
+		if (one == null || one.length == 0 || two == null || two.length == 0) return new Integer[0];
+		Integer[] intersect = new Integer[one.length < two.length ? one.length : two.length];
+        
+		int maxLength = 0;
+		int maxStart = 0; 
+		for (int i = 0; i < one.length; i++) {
+			int length = 0;
+			int start = -1;
+			if (one[i] == null) return new Integer[0];
+			for (int j = 0; j < two.length; j++) {
+				if (two[j] == null) return new Integer[0];
+				if (i + length < one.length && two[j] == one[i + length]) {
+					if (start < 0) {
+						start = j;
+					}
+					++length;
+				} 
+				if (length > maxLength) {
+					maxLength = length;
+					maxStart = start;
+				}
+				if (length > 0 && i + length < one.length && two[j] != one[i + length]) {
+					break;
+				}
+				System.out.println("one " + one[i + length] + " | two " + two[j] + " | maxLength " + maxLength + " | start " + maxStart);
+			}
+		}
+		if (maxLength > 0) {
+			Integer[] result = new Integer[maxLength];
+			for (int i = 0; i < maxLength; i++) {
+				result[i] = two[i + maxStart];
+			}
+			return result;
+		}
+		return new Integer[0];
 	}
 	
 	/**
@@ -59,6 +93,7 @@ public class IntersectingArrays {
 	 * @return Collection of the intersected values
 	 */
 	public List<Integer> intersectWithCollections(Integer[] one, Integer[] two) {
+		if (one == null || one.length == 0 || two == null || two.length == 0) return new ArrayList<>();
 		return new ArrayList<>();
 	}
 }

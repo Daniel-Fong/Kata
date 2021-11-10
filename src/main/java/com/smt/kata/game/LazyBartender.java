@@ -1,5 +1,7 @@
 package com.smt.kata.game;
 
+import java.util.ArrayList;
+import java.util.Collections;
 // JDK 11.x
 import java.util.List;
 import java.util.Map;
@@ -9,8 +11,8 @@ import java.util.Map;
  * <b>Project</b>: SMT-Kata
  * <b>Description: </b> Lazy Bartender Kata
  * 
- * At a popular bar, each customer has a set of favorite drinks, and will happily 
- * accept any drink among this set. For example, in the following situation, customer 
+ * At a popular bar, each customer has a List of favorite drinks, and will happily 
+ * accept any drink among this List. For example, in the following situation, customer 
  * 0 will be satisfied with drinks 0, 1, 3, or 6.
  * 
  * preferences = {
@@ -44,6 +46,56 @@ public class LazyBartender {
 	 * @return Minimum number of drinks to memorize.
 	 */
 	public int minimumTypes(Map<Integer, List<Integer>> custDrinks) {
-		return custDrinks.size();
+		if (custDrinks == null) return 0;
+		List<Integer> drinks = new ArrayList<>();
+		for (var item : custDrinks.entrySet()) {
+			for (int num: item.getValue()) {
+				if (!drinks.contains(num)) drinks.add(num);
+			}
+		}
+		List<List<Integer>> powerList = powerList(drinks);
+		
+		
+		List<Integer> counts = new ArrayList<>();
+		
+		for (List<Integer> list : powerList) {
+			if (coversAll(custDrinks, list)) {
+				counts.add(list.size());
+			}
+		}
+		Collections.sort(counts);
+		return counts.get(0);
 	}
+	
+	public boolean coversAll(Map<Integer, List<Integer>> custDrinks, List<Integer> drinks) {
+		for (var item : custDrinks.entrySet()) {
+			boolean hasOne = false;
+			for (var num : item.getValue()) {
+				if (drinks.contains(num)) {
+					hasOne = true;
+				}
+			}
+			if (!hasOne) return false;
+		}
+		return true;
+	}
+	
+	public static List<List<Integer>> powerList(List<Integer> originalList) {
+	    List<List<Integer>> lists = new ArrayList<>();
+	    if (originalList.isEmpty()) {
+	        lists.add(new ArrayList<>());
+	        return lists;
+	    }
+	    List<Integer> list = new ArrayList<>(originalList);
+	    int head = list.get(0);
+	    List<Integer> rest = new ArrayList<>(list.subList(1, list.size())); 
+	    for (List<Integer> List : powerList(rest)) {
+	        List<Integer> newList = new ArrayList<>();
+	        newList.add(head);
+	        newList.addAll(List);
+	        lists.add(newList);
+	        lists.add(List);
+	    }       
+	    return lists;
+	}  
 }

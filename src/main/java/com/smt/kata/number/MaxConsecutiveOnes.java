@@ -36,7 +36,20 @@ public class MaxConsecutiveOnes {
 	 * @return Count of the largest sequence of ones
 	 */
 	public int count(int[] values) {
-		return values.length;
+		if (values == null || values.length == 0) return 0;
+		int max = 0;
+		int count = 0;
+		for (int num : values) {
+			if (num == 1) {
+				++count;
+				if (count > max) {
+					max = count;
+				}
+			} else {
+				count = 0;
+			}
+		}
+		return max;
 	}
 
 }

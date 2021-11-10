@@ -1,5 +1,10 @@
 package com.smt.kata.word;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.siliconmtn.util.StringUtil;
+
 /****************************************************************************
  * <b>Title</b>: TextJustification.java
  * <b>Project</b>: Daily-Kata
@@ -76,6 +81,77 @@ public class TextJustification {
 	 * @return Formatted phrase
 	 */
 	public String formatPhrase(String phrase, int maxWidth) {
-		return phrase;
+		if (phrase == null || phrase.length() == 0 || !checkWords(phrase, maxWidth)) return "";
+		
+		List<List<String>> lines = splitPhrase(phrase, maxWidth);
+		
+		StringBuilder result = new StringBuilder(maxWidth * lines.size() + lines.size() * 2);
+		
+		for (int i = 0; i < lines.size()-1; i++) {
+			result.append(spaceAdder(lines.get(i), maxWidth)).append("\n");
+		}
+		
+		result.append(spaceAdderLastLine(lines.get(lines.size()-1), maxWidth));
+		
+		return result.toString();
+	}
+	
+	private boolean checkWords(String phrase, int maxWidth) {
+		for (String s : phrase.split(" ")) {
+			if (s.length() > maxWidth) return false;
+		}
+		return true;
+	}
+	
+	private List<List<String>> splitPhrase(String phrase, int maxWidth) {
+		List<List<String>> lines = new ArrayList<>();
+		List<String> line = new ArrayList<>();
+		int curLen = 0;
+		for (String s : phrase.split(" ")) {
+			if ((curLen + s.length()) > maxWidth) {
+				lines.add(line);
+				curLen = 0;
+				line = new ArrayList<>();
+			}
+			line.add(s);
+			curLen += s.length();
+			
+			//Add the default space if we have room
+			if (curLen < maxWidth) curLen++;
+		}
+		lines.add(line);
+		
+		return lines;
+	}
+
+	public String spaceAdder(List<String> line, int maxWidth) {
+		int strWidth = 0;
+		for (String str : line) {
+			strWidth += str.length();
+		}
+		int numSpaces = maxWidth - strWidth;
+		
+		int wordSpace = line.size() > 2 ? line.size() - 2 : 0;
+		
+		int currentIndex = 0; 
+		
+		while (numSpaces > 0) {
+			line.set(currentIndex, line.get(currentIndex) + " ");
+			if (currentIndex < wordSpace) {
+				++currentIndex;
+			} else {
+				currentIndex = 0;
+			}
+			--numSpaces;
+		}
+		
+		return String.join("", line);
+	}
+
+	public String spaceAdderLastLine(List<String> line, int maxWidth) {
+		for (int i = 0; i < line.size()-1; i++) {
+			line.set(i, line.get(i) + " ");
+		}
+		return StringUtil.padRight(String.join("", line), ' ', maxWidth);
 	}
 }

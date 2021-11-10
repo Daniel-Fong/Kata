@@ -42,7 +42,15 @@ public class BuySellStock {
 	 * @return Max profit amount.  ) if no profit (or loss)
 	 */ 
 	public int calculateMaxProfit(int[] trades) {
-		return trades.length;
+		if (trades == null || trades.length == 0) return 0;
+		int maximum = 0;
+		 for(int i = 0; i < trades.length-1; i++) {
+		        for(int j = i +1; j < trades.length; j++) {
+		        	if(trades[j]-trades[i] > maximum) maximum = trades[j]-trades[i];
+			}
+		}
+		
+		return maximum;
 	}
 
 }
