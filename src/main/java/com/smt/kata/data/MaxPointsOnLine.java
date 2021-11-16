@@ -39,99 +39,99 @@ import java.util.List;
  * @updates:
  ****************************************************************************/
 public class MaxPointsOnLine {
-	
-	/**
-	 * Calculates the number of points on a straight line
-	 * @param points Points on the graph
-	 * @return Max points in any straight line (vertical, horizontal and diagonal)
-	 */
-	public int findMax(int[][] points) {
-		if (points == null || points.length == 0 || points[0] == null || points[0].length == 0) return 0;
-		List<Integer> counts = new ArrayList<>();
-		for(int[] point : points) {
-			if (point != null) {
-				counts.add(horizontal(points, point));
-				counts.add(vertical(points, point));
-				counts.add(diagonal1(points, point));
-				counts.add(diagonal2(points, point));
-			}
-		}
-		Collections.sort(counts);
-		Collections.reverse(counts);
-		return counts.get(0);
-	}
-	
-	public int horizontal(int[][] points, int[] start) {
-		int count = 1;
-		List<int[]> list = new ArrayList<>();
-		list.add(start);
-		for(int[] point : points) {
-			if (point != null && !!containsPoint(list, point)) {
-				list.add(point);
-				if (point[0] == start[0]) {
-					++count;
-				}
-			} 
-		}
-		return count;
-	}
-	
-	public int vertical(int[][] points, int[] start) {
-		int count = 1;
-		List<int[]> list = new ArrayList<>();
-		list.add(start);
-		for(int[] point : points) {
-			if (point != null && !containsPoint(list, point)) {
-				System.out.println(point);
-				list.add(point);
-				if (point[1] == start[1]) {
-					++count;
-				}
-			} 
-		}
-		return count;
-	}
-	
-	public int diagonal1(int[][] points, int[] start) {
-		int count = 1;
-		List<int[]> list = new ArrayList<>();
-		list.add(start);
-		for(int[] point : points) {
-			if (point == null || !containsPoint(list, point)) {
-				continue;
-			} else {
-				list.add(point);
-				if (point[1] - start[1] == point[0] - start[0]) {
-					++count;
-				}
-			}
-		}
-		return count;
-	}
-	
-	public int diagonal2(int[][] points, int[] start) {
-		int count = 1;
-		List<int[]> list = new ArrayList<>();
-		list.add(start);
-		for(int[] point : points) {
-			if (point == null || !containsPoint(list, point)) {
-				continue;
-			} else {
-				list.add(point);
-				if (start[1] - point[1] == -(start[0] - point[0])) {
-					++count;
-				}
-			}
-		}
-		return count;
-	}
-	
-	public boolean containsPoint(List<int[]> list, int[] point) {
-		for (int[] arr : list) {
-			if (arr[0] == point[0] && arr[1] == point[1]) {
-				return true;
-			}
-		}
-		return false;
-	}
+    
+    /**
+     * Calculates the number of points on a straight line
+     * @param points Points on the graph
+     * @return Max points in any straight line (vertical, horizontal and diagonal)
+     */
+    public int findMax(int[][] points) {
+        if (points == null || points.length == 0 || points[0] == null || points[0].length == 0) return 0;
+        List<Integer> counts = new ArrayList<>();
+        for(int[] point : points) {
+            if (point != null) {
+                counts.add(horizontal(points, point));
+                counts.add(vertical(points, point));
+                counts.add(diagonal1(points, point));
+                counts.add(diagonal2(points, point));
+            }
+        }
+        Collections.sort(counts);
+        Collections.reverse(counts);
+        return counts.get(0);
+    }
+    
+    public int horizontal(int[][] points, int[] start) {
+        int count = 1;
+        List<int[]> list = new ArrayList<>();
+        list.add(start);
+        for(int[] point : points) {
+            if (point != null && !!containsPoint(list, point)) {
+                list.add(point);
+                if (point[0] == start[0]) {
+                    ++count;
+                }
+            } 
+        }
+        return count;
+    }
+    
+    public int vertical(int[][] points, int[] start) {
+        int count = 1;
+        List<int[]> list = new ArrayList<>();
+        list.add(start);
+        for(int[] point : points) {
+            if (point != null && !containsPoint(list, point)) {
+                System.out.println(point);
+                list.add(point);
+                if (point[1] == start[1]) {
+                    ++count;
+                }
+            } 
+        }
+        return count;
+    }
+    
+    public int diagonal1(int[][] points, int[] start) {
+        int count = 1;
+        List<int[]> list = new ArrayList<>();
+        list.add(start);
+        for(int[] point : points) {
+            if (point == null || !containsPoint(list, point)) {
+                continue;
+            } else {
+                list.add(point);
+                if (point[1] - start[1] == point[0] - start[0]) {
+                    ++count;
+                }
+            }
+        }
+        return count;
+    }
+    
+    public int diagonal2(int[][] points, int[] start) {
+        int count = 1;
+        List<int[]> list = new ArrayList<>();
+        list.add(start);
+        for(int[] point : points) {
+            if (point == null || !containsPoint(list, point)) {
+                continue;
+            } else {
+                list.add(point);
+                if (start[1] - point[1] == -(start[0] - point[0])) {
+                    ++count;
+                }
+            }
+        }
+        return count;
+    }
+    
+    public boolean containsPoint(List<int[]> list, int[] point) {
+        for (int[] arr : list) {
+            if (arr[0] == point[0] && arr[1] == point[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
