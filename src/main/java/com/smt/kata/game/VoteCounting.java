@@ -1,9 +1,19 @@
 package com.smt.kata.game;
 
+import java.io.BufferedReader;
 // JDK 11.x
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import org.graalvm.compiler.hotspot.nodes.type.MethodCountersPointerStamp;
 
 /****************************************************************************
  * <b>Title</b>: VoteCounting.java
@@ -49,6 +59,19 @@ public class VoteCounting {
 	 * @throws IOException If votes can't be loaded
 	 */
 	public List<Candidates> count(int version) throws IOException {
+		var fileName = String.format(RESOURCE, version);
+		Map<Candidates, Integer> counts = new HashMap<>();
+		try (var reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName)))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+			    if (line.isEmpty()) {
+			        break;
+			    }
+			    List<String> list = Arrays.asList(line.split("\\s+"));
+				if (counts.containsKey(list.get(1))) {
+				}
+			}
+		}
 		return new ArrayList<>();
 	}
 	
