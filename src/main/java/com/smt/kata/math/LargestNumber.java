@@ -1,7 +1,12 @@
 package com.smt.kata.math;
 
+import java.util.ArrayList;
 // JDK 11.x
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.tomcat.util.buf.StringUtils;
 
 /****************************************************************************
  * <b>Title</b>: LargestNumber.java
@@ -49,6 +54,41 @@ public class LargestNumber {
 	 * empty or null
 	 */
 	public String find(int[] values) {
-		return Arrays.toString(values);
+		if (values == null || values.length == 0) return "";
+		List<String> list = new ArrayList<>();
+		List<String> results = new ArrayList<>();
+		for (int num : values) {
+			list.add(Integer.toString(num));
+		}
+		if (list.size() == 1) return list.get(0);
+		for (int i = 0; i < list.size(); i++) {
+			String highest = list.get(0);
+			int highestIndex = 0;
+			for (int j = 1; j < list.size(); j++) {
+				String cur = list.get(j);
+				int index = 0;
+				for (char c : cur.toCharArray()) {
+					if (index >= highest.length()) {
+						if (c > highest.charAt(0)) {
+							highest = cur;
+							highestIndex = j;	
+						}
+						break;
+					}
+					if (c > highest.charAt(index)) {
+						highest = cur;
+						highestIndex = j;
+						++index;
+					} else if (c < highest.charAt(index)) {
+						break;
+					} else {
+						++index;
+					}
+				}
+			}
+			results.add(highest);
+			list.set(highestIndex, "0");
+		}
+		return String.join("", results);
 	}
 }
