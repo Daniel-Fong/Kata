@@ -1,5 +1,9 @@
 package com.smt.kata.game;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: HouseRobber.java
  * <b>Project</b>: SMT-Kata
@@ -40,12 +44,31 @@ package com.smt.kata.game;
  ****************************************************************************/
 public class HouseRobber {
 	
+	List<Integer> results = new ArrayList<>();
+	
 	/**
 	 * Calculates the max amount a robber can make without getting arrested
 	 * @param values
 	 * @return
 	 */
 	public int calculate(int[] values) {
-		return values.length;
+		if (values == null || values.length < 1) return 0;
+		if (values.length == 1) return values[0];
+		recurse(values, 0, 0);
+		recurse(values, 1, 0);
+		Collections.sort(results);
+		Collections.reverse(results);
+		return results.get(0);
+	}
+	
+	public void recurse(int[] values, int index, int total) {
+		int newTotal = total + values[index];
+		if (index >= values.length - 2) results.add(newTotal);
+		else {
+			recurse(values, index + 2, newTotal);
+			if (index < values.length -3) {
+				recurse(values, index + 3, newTotal);
+			}
+		}
 	}
 }
