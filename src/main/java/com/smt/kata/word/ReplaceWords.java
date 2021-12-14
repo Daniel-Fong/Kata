@@ -59,7 +59,33 @@ package com.smt.kata.word;
 public class ReplaceWords {
 
 	public String update(String phrase, String[] roots) {
-		return phrase;
+		if (phrase == null || phrase.length() < 1 || roots == null || roots.length < 1) return "";
+		String[] arr = phrase.split(" ");
+		for (int x = 0; x < arr.length; x++) {
+			String str = arr[x];
+			if (str.length() < 2) {
+				continue;
+			}
+			String newStr = "";
+			boolean first = true;
+			for (String root: roots) {
+				if (root == null || root.length() >= str.length()) continue;
+				boolean valid = true;
+				for (int i = 0; i < root.length(); i++) {
+					if (root.charAt(i) != str.charAt(i)) {
+						valid = false;
+					} 
+				}
+				if (valid && (first == true || root.length() < newStr.length())) {
+					newStr = root;
+					first = false;
+				}
+			}
+			if (newStr.length() > 0) {
+				arr[x] = newStr;
+			}
+		}
+		return String.join(" ", arr);
 	}
 
 }

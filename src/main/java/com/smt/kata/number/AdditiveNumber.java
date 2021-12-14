@@ -1,5 +1,10 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.siliconmtn.util.Convert;
+
 /****************************************************************************
  * <b>Title</b>: AdditiveNumber.java
  * <b>Project</b>: SMT-Kata
@@ -42,12 +47,50 @@ package com.smt.kata.number;
  * @updates:
  ****************************************************************************/
 public class AdditiveNumber {
+	List<List<Integer>> allLists = new ArrayList<>();
 	/**
 	 * Determines if the provided sequence is additive
 	 * @param sequence Numeric sequence to evaluate
 	 * @return True if additive, false otherwise
 	 */
 	public boolean isAdditive(String sequence) {
-		return sequence == null;
+		if (sequence == null || sequence.length() < 3 || !sequence.matches("^[0-9]+$")) return false;
+		recurse(sequence, 0, new ArrayList<>());
+		for (List<Integer> list: allLists) {
+			System.out.println(list);
+		}
+		for (List<Integer> list : allLists) {
+			if (list.size() < 3) return false;
+			if (checkAdditive(list)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void recurse(String sequence, int index, List<Integer> numList) {
+		for (int i = 1; i < sequence.length() - index + 1; i++) {
+			List<Integer> newList = new ArrayList<>();
+			for (int num: numList) {
+				newList.add(num);
+			}
+			String str = sequence.substring(index, index + i);
+			if (str.charAt(0) == '0') break;
+			newList.add(Convert.formatInteger(str));
+			if (index + i >= sequence.length() - 1 && newList.size() > 2) {
+				allLists.add(newList);
+			} else {
+				recurse(sequence, index + i, newList);
+			}
+		}
+	}
+	
+	public boolean checkAdditive(List<Integer> list) {
+		for (int i = 0; i < list.size() - 2; i++) {		
+			if (list.get(i) + list.get(i+1) != list.get(i+2)) {
+				return false;
+			} 
+		}
+		return true;
 	}
 }

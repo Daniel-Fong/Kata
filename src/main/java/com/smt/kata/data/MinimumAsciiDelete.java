@@ -1,5 +1,9 @@
 package com.smt.kata.data;
 
+import java.nio.CharBuffer;
+import java.util.List;
+import java.util.stream.Stream;
+
 /****************************************************************************
  * <b>Title</b>: MinimumAsciiDelete.java
  * <b>Project</b>: SMT-Kata
@@ -53,6 +57,9 @@ public class MinimumAsciiDelete {
 	 * @return Total of the removed ascii values
 	 */
 	public int getMinumumValue(String s1, String s2) {
-		return s1.length() + s2.length();
+		if (s1 == null || s2 == null) return 0;
+		int sum1 = s1.chars().map((i) -> s2.indexOf(i) != -1 ? 0 : i).reduce(0, Integer::sum); 
+		int sum2 = s2.chars().map((i) -> s1.indexOf(i) != -1 ? 0 : i).reduce(0, Integer::sum); 
+		return sum1 + sum2;
 	}
 }
