@@ -53,7 +53,29 @@ public class ConsecutiveDifferences {
 	 * data or none found
 	 */
 	public List<Integer> find(int n, int k) {
-		return new ArrayList<>();
+		if (n < 2 || n > 9 || k < 0 || k > 9) return new ArrayList<>();
+		List<Integer> results = new ArrayList<>();
+		for (int i = 1; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (i-j == k || j-i == k) {
+					String str = "";
+					boolean odd = true;
+					int count = 0;
+					while (count < n) {
+						if (odd) {
+							str += i;
+							odd = false;
+						} else {
+							str += j;
+							odd = true;
+						}
+						++count;
+					}
+					results.add(Integer.parseInt(str));
+				}
+			}
+		}
+		return results;
 	}
 
 }
