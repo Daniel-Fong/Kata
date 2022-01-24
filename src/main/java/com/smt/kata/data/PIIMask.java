@@ -98,6 +98,39 @@ public class PIIMask {
 	 * @return Masked data.  Empty if data is invalid
 	 */
 	public String mask(String source) {
-		return source;
+		if (source == null || source.length() == 0) return "";
+		if (source.indexOf('@') >= 0) {
+			return maskEmail(source);
+		} else {
+			return maskPhoneNumber(source);
+		}
+	}
+	
+	public String maskEmail(String source) {
+		source = source.toLowerCase();
+		String[] arr = source.split("@");
+		if (arr.length > 2 || arr[0].length() < 1) {
+			return "";
+		}
+		String str1 = arr[0].charAt(0) + "*****" + arr[0].charAt(arr[0].length() - 1);
+		return str1 + "@" + arr[1];
+	}
+	
+	public String maskPhoneNumber(String source) {
+		source = source.replaceAll("[()-]", ".");
+		String source1 = source.replaceAll("\\.", "");
+		if (source1.length() < 10) return "";
+		source = source.replaceAll("[^\\d.]", "");
+		String[] arr = source.split("\\.");
+		System.out.println(source1);
+		String str1 = "";
+		if (arr.length == 4 && arr[0].length() > 0) {
+			str1 = "+";
+			for (int i = 0; i < arr[0].length(); i++) {
+				str1 = str1 + "*";
+			}
+			str1 = str1 + "-";
+		}
+		return str1 + "***-***-" + arr[arr.length - 1];
 	}
 }

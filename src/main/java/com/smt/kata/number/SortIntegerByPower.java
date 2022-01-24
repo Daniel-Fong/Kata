@@ -1,5 +1,11 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 // JDK 11.x
 
 /****************************************************************************
@@ -77,6 +83,38 @@ public class SortIntegerByPower {
 	 * @return value in the high/low range, sorted that matches the kth element
 	 */
 	public int find(int low, int high, int k) {
-		return k;
+		if (low < 0 || high < 0 || k < 0 || low > high || k > high - low + 1) return 0;
+		Map<Integer, List<Integer>> map = new TreeMap<>();
+		List<Integer> sorted = new ArrayList<>();
+		for (int i = low; i <= high; i++) {
+			if (map.get(getPower(i)) != null && map.get(getPower(i)).size() > 0) {
+				map.get(getPower(i)).add(i);
+			} else {
+				List<Integer> list = new ArrayList<>();
+				list.add(i);
+				map.put(getPower(i), list);
+			}
+			
+		}
+		Object[] results = map.values().toArray();
+		for (Object obj : results) {
+			for (Integer num: (List<Integer>) obj) {
+				sorted.add(num);
+			}
+		}
+		return sorted.get(k - 1);
+	}
+	
+	public int getPower(int num) {
+		int power = 0;
+		while (num != 1) {
+			if (num % 2 == 0) {
+				num = num / 2;
+			} else {
+				num = 3 * num + 1;
+			}
+			++power;
+		}
+		return power;
 	}
 }
