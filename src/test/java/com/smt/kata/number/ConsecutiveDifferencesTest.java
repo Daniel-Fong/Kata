@@ -3,12 +3,11 @@ package com.smt.kata.number;
 // Junit 5
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
+// JDK 11.x
 import java.util.ArrayList;
 import java.util.Arrays;
-// JDK 11.x
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,9 +46,6 @@ class ConsecutiveDifferencesTest {
 		assertEquals(0, cd.find(10, 1).size());
 	}
 
-	/**
-     * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
-     */
     @Test
     void testFindExampleOne() throws Exception {
         int[] matches = new int[] {181,292,707,818,929};

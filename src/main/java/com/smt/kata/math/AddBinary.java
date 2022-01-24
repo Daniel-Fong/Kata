@@ -39,6 +39,5 @@ public class AddBinary {
 	 * @param b Second Binary Number
 	 * @return Sum of the 2 binary numbers added together 
 	 */
-	o
 
 }
