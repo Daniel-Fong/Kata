@@ -1,5 +1,6 @@
 package com.smt.kata.html;
 
+import java.util.ArrayList;
 // JDK 11.x
 import java.util.List;
 
@@ -39,6 +40,56 @@ public class EmboldenPhrase {
 	 * @return Bolded phrase
 	 */
 	public String embolden(String phrase, List<String> boldWords) {
-		return phrase;
+		if (phrase == null || phrase.length() == 0)
+	       return "";
+	    if (boldWords == null || boldWords.isEmpty())
+	       return phrase;
+		List<String> jointList = getJoints(boldWords);
+		List<String> result = new ArrayList<>();
+		
+		for (int i = 0; i < phrase.length(); i++) {
+			boolean added = false;
+			for (String joint : jointList) {
+				if (i + joint.length() <= phrase.length()) {
+					String match = phrase.substring(i, i + joint.length());
+					if (joint.equals(match)) {
+						result.add(OPEN_TAG + joint + CLOSED_TAG);
+						i += joint.length() - 1;
+						added = true;
+					}
+				}
+				
+			}
+			for (String bold : boldWords) {
+				if (!added && i + bold.length() <= phrase.length()) {
+					String match = phrase.substring(i, i + bold.length());
+					if (bold.equals(match)) {
+						result.add(OPEN_TAG + bold + CLOSED_TAG);
+						i += bold.length() - 1;
+						added = true;
+					}
+				}
+			}
+			if (!added) {
+				result.add(phrase.charAt(i) + "");
+			}
+		}
+		return String.join("", result);
+	}
+	
+	public List<String> getJoints(List<String> boldWords) {
+		List<String> jointList = new ArrayList<>();
+		for (String str : boldWords) {
+			for(String str2 : boldWords) {
+				String joint = str;
+				if (str.charAt(str.length() - 1) == str2.charAt(0)) {
+					for (int i = 1; i < str2.length(); i++) {
+						joint += str2.charAt(i);
+					}
+					jointList.add(joint);
+				}
+			}
+		}
+		return jointList;
 	}
 }

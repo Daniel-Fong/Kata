@@ -1,5 +1,7 @@
 package com.smt.kata.data;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: MedianWindow.java
  * <b>Project</b>: SMT-Kata
@@ -47,6 +49,27 @@ public class MedianWindow {
 	 * @return Overall median valu of the medians of each window
 	 */
 	public int calculateMedianFromWindow(int[] values, int k) {
-		return values.length;
+		if (values == null || values.length == 0 || k < 0 || k > values.length) return 0;
+		int[] results = new int[values.length - k + 1];
+		for (int i = 0; i < values.length - k + 1; i++) {
+			int[] arr = new int[k];
+			int index = 0;
+			for(int j = i; j < i + k; j++) {
+				arr[index] = values[j];
+				++index;
+			}
+			Arrays.sort(arr);
+			results[i] = getMedian(arr);
+		}
+		Arrays.sort(results);
+		return getMedian(results);
+	}
+	
+	public int getMedian(int[] arr) {
+		if (arr.length % 2 != 0) {
+			return arr[(arr.length - 1) / 2];
+		} else {
+			return (arr[arr.length / 2 - 1] + arr[arr.length/ 2]) / 2;
+		}			
 	}
 }

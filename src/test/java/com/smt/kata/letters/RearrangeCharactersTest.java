@@ -39,7 +39,7 @@ class RearrangeCharactersTest {
 	 */
 	@Test
 	void testArrangeExampleTwo() throws Exception {
-		List<String> possible = Arrays.asList(new String[]{"lordewhlol", "lololrdewh"});
+		List<String> possible = Arrays.asList(new String[]{"lordewhlol", "rldlelwoho"});
 		String res = rc.arrange("helloworld");
 		assertTrue(possible.contains(res));
 	}
@@ -81,7 +81,7 @@ class RearrangeCharactersTest {
 	 */
 	@Test
 	void testArrangeLong() throws Exception {
-		List<String> possible = Arrays.asList(new String[]{"ababababababababfgfgcde"});
+		List<String> possible = Arrays.asList(new String[]{"ababababababababfgfgcde", "ababababacadaeafbfbgbgb"});
 		String res = rc.arrange("aabbaabbaabbaabbcdeffgg");
 		assertTrue(possible.contains(res));
 	}
@@ -91,7 +91,7 @@ class RearrangeCharactersTest {
 	 */
 	@Test
 	void testArrangeExamplethree() throws Exception {
-		List<String> possible = Arrays.asList(new String[]{"lalrldewho"});
+		List<String> possible = Arrays.asList(new String[]{"lalrldewho", "ahrldlelwo"});
 		String res = rc.arrange("hellaworld");
 		assertTrue(possible.contains(res));
 	}
@@ -102,7 +102,7 @@ class RearrangeCharactersTest {
 	 */
 	@Test
 	void testArrangeNoDups() throws Exception {
-		List<String> possible = Arrays.asList(new String[]{"abcdefghijklmnopqrstuvwxyz"});
+		List<String> possible = Arrays.asList(new String[]{"abcdefghijklmnopqrstuvwxyz", "anbocpdqerfsgthuivjwkxlymz"});
 		String res = rc.arrange("abcdefghijklmnopqrstuvwxyz");
 		assertTrue(possible.contains(res));
 	}

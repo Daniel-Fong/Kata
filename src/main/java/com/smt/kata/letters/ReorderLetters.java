@@ -1,5 +1,12 @@
 package com.smt.kata.letters;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: ReorderLetters.java
  * <b>Project</b>: SMT-Kata
@@ -31,7 +38,7 @@ package com.smt.kata.letters;
  * @updates:
  ****************************************************************************/
 public class ReorderLetters {
-
+	String result = "";
 	/**
 	 * Reorders the letters based upon the total number each character is present and 
 	 * then ordered alphabetically.
@@ -39,6 +46,23 @@ public class ReorderLetters {
 	 * @return Reordered word
 	 */
 	public String process(String word) {
-		return word;
+		if (word == null || word.length() < 1) return "";
+		LinkedHashMap<Character, Integer> map = new LinkedHashMap<Character, Integer>();
+		for (char c : word.toCharArray()) {
+			if (map.containsKey(c)) {
+				map.put(c, map.get(c) + 1);
+			} else {
+				map.put(c, 1);
+			}
+		}
+		
+		map.entrySet().stream().sorted(Map.Entry.comparingByKey())
+			.sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
+			.forEach(entry -> {
+				for (int i = 0; i < entry.getValue(); i++) {
+					result += entry.getKey();
+				}
+			});
+		return result;
 	}
 }
