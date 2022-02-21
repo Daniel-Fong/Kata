@@ -47,17 +47,25 @@ public class FiveLongWeekends {
 	 * @return Date of the five long weekends month.  Null otherwise
 	 */
 	public Date findNext(Date d) {
+		if (d.equals(new Date())) return null;
+		return recurse(d, true);
+	}
+	
+	public Date recurse(Date d, boolean first) {
+		Date result = d;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(d);
+		cal.setTime(result);
+		if (!first) {
+			cal.set(cal.DAY_OF_MONTH, 1);
+		}
 		if (cal.getActualMaximum(Calendar.DAY_OF_MONTH) == 31 && Calendar.FRIDAY == cal.get(Calendar.DAY_OF_WEEK)) {
-				return d;
+				return result;
 		} else {
 			cal.add(Calendar.MONTH, 1);
-			d.setMonth(d.getMonth() + 1);
-			findNext(d);
+			result.setMonth(result.getMonth() + 1);
+			recurse(result, false);
 		}
-		System.out.println(d);
-		return d;
+		return result;
 	}
 
 }

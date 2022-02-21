@@ -1,5 +1,10 @@
 package com.smt.kata.code;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.hibernate.internal.build.AllowSysOut;
+
 /****************************************************************************
  * <b>Title</b>: PolybiusSquare.java
  * <b>Project</b>: SMT-Kata
@@ -26,6 +31,13 @@ package com.smt.kata.code;
  * @updates:
  ****************************************************************************/
 public class PolybiusSquare {
+	Map<Character, String> map = new HashMap<>();
+	Map<String, String> decodeMap = new HashMap<>();
+	
+	public PolybiusSquare() {
+		// Load the word map
+		loadMap();
+	}
 
 	/**
 	 * Encodes a sentence into its polybius values
@@ -33,7 +45,17 @@ public class PolybiusSquare {
 	 * @return
 	 */
 	public String polybiusEncode(String term){
-		return term;
+		if (term == null|| term.length() == 0) return "";
+		String upper = term.toUpperCase();
+		String result = "";
+		for (char c : upper.toCharArray()) {
+			if (!map.containsKey(c)) {
+				result += " ";
+			} else {
+				result += map.get(c);	
+			}
+		}
+		return result;
 	}
 	
 	/**
@@ -42,7 +64,73 @@ public class PolybiusSquare {
 	 * @return
 	 */
 	public String decodeValue(String code){
-	    return code;
+		if (code == null|| code.length() == 0) return "";
+		String result = "";
+		for (int i = 0; i < code.length(); i++) {
+			if (code.charAt(i) == ' ') {
+				result += " ";
+				continue;
+			} else {
+				String str = code.charAt(i) + "" + code.charAt(i+1) + "";
+				result += decodeMap.get(str);
+				++i;
+			}
+			
+		}
+		return result;
 	}
-
+	
+	public void loadMap() {
+		map.put('A', "11");
+		map.put('C', "13");
+		map.put('B', "12");
+		map.put('D', "14");
+		map.put('E', "15");
+		map.put('F', "21");
+		map.put('G', "22");
+		map.put('H', "23");
+		map.put('I', "24");
+		map.put('J', "24");
+		map.put('K', "25");
+		map.put('L', "31");
+		map.put('M', "32");
+		map.put('N', "33");
+		map.put('O', "34");
+		map.put('P', "35");
+		map.put('Q', "41");
+		map.put('R', "42");
+		map.put('S', "43");
+		map.put('T', "44");
+		map.put('U', "45");
+		map.put('V', "51");
+		map.put('W', "52");
+		map.put('X', "53");
+		map.put('Y', "54");
+		map.put('Z', "55");
+		decodeMap.put("11", "a");
+		decodeMap.put("13", "b");
+		decodeMap.put("12", "c");
+		decodeMap.put("14", "d");
+		decodeMap.put("15", "e");
+		decodeMap.put("21", "f");
+		decodeMap.put("22", "g");
+		decodeMap.put("23", "h");
+		decodeMap.put("24", "i");
+		decodeMap.put("25", "k");
+		decodeMap.put("31", "l");
+		decodeMap.put("32", "m");
+		decodeMap.put("33", "n");
+		decodeMap.put("34", "o");
+		decodeMap.put("35", "p");
+		decodeMap.put("41", "q");
+		decodeMap.put("42", "r");
+		decodeMap.put("43", "s");
+		decodeMap.put("44", "t");
+		decodeMap.put("45", "u");
+		decodeMap.put("51", "v");
+		decodeMap.put("52", "w");
+		decodeMap.put("53", "x");
+		decodeMap.put("54", "y");
+		decodeMap.put("55", "z");
+	}           
 }

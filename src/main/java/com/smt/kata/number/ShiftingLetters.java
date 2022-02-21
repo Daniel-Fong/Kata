@@ -1,7 +1,5 @@
 package com.smt.kata.number;
 
-import com.siliconmtn.util.StringUtil;
-
 /****************************************************************************
  * <b>Title</b>: ShiftingLetters.java
  * <b>Project</b>: SMT-Kata
@@ -55,15 +53,7 @@ public class ShiftingLetters {
 	 * @return Transformed string.  Returns source if data is invalid
 	 */
 	public String transform(String source, int[] shifts) {
-		if (StringUtil.isEmpty(source) || source.matches("[0-9]+.*") || shifts == null || shifts.length == 0) return source;
-		String lower = source.toLowerCase();
-		char[] arr = lower.toCharArray();
-		for (int i = 0; i < shifts.length; i++) {
-			for (int j = 0; j < i + 1; j++) {
-				arr[j] = shift(arr[j], shifts[i]);
-			}
-		}
-		return new String(arr);
+		return "";
 		
 	}
 	

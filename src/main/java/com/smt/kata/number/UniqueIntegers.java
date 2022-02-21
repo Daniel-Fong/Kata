@@ -1,7 +1,11 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 // JDK 11.x
 import java.util.List;
+import java.util.Map;
 
 /****************************************************************************
  * <b>Title</b>: UniqueIntegers.java
@@ -43,7 +47,7 @@ import java.util.List;
  * @updates:
  ****************************************************************************/
 public class UniqueIntegers {
-
+	int skip;
 	/**
 	 * Calculates the least number of unique numbers after removing k elements
 	 * @param values Values to process
@@ -51,6 +55,30 @@ public class UniqueIntegers {
 	 * @return Smallest unique list
 	 */
 	public List<Integer> calculate(int[] values, int k) {
-		return null;
+		if (values == null || values.length <= 0 || k < 0) return new ArrayList<>();
+		skip = k;
+		List<Integer> results = new ArrayList<>();
+		Map<Integer, Integer> map = new LinkedHashMap<>();
+		for (int num : values) {
+			if (map.containsKey(num)) {
+				map.put(num, map.get(num) + 1);
+			} else {
+				map.put(num, 1);
+			}
+		}
+		
+		map.entrySet().stream().sorted(Map.Entry.comparingByKey(Collections.reverseOrder()))
+		.sorted(Map.Entry.comparingByValue())
+		.forEach(entry -> {
+			for (int i = 0; i < entry.getValue(); i ++) {
+				if (skip > 0) {
+					--skip;
+				} else {
+					if (!results.contains(entry.getKey()))
+					results.add(entry.getKey());
+				}				
+			}
+		});
+		return results;
 	}
 }

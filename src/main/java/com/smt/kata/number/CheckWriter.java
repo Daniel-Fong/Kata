@@ -4,6 +4,8 @@ package com.smt.kata.number;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 /****************************************************************************
  * <b>Title</b>: CheckWriter.java
  * <b>Project</b>: SMT-Kata
@@ -34,6 +36,7 @@ public class CheckWriter {
 	 * Holds the map to convert integer to words
 	 */
 	Map<Integer, String> numberMap = new HashMap<>();
+	Map<Integer, String> placeMap = new HashMap<>();
 	
 	/**
 	 * Initializes the Checkwriter and loads the xref map
@@ -49,48 +52,47 @@ public class CheckWriter {
 	 * @return
 	 */
 	public String convertWords(double data) {
-		String str = data + "";
+		String[] split = String.valueOf(data).split("\\.");
 		String cents = "";
-		if (str.contains(".")) {
-			cents = str.substring(str.length() - 2, str.length());
-			str = str.substring(0, str.length() - 3);
+		if (split.length == 2) {
+			cents = " and " + split[1] + "/100";
 		}
-		String result = "";
-		if (str.length() > 3) {
-			String thousands = str.substring(0, str.length() - 3);
-			str = str.substring(str.length() - 3, str.length());
-			System.out.println(thousands);
-			System.out.println(str);
-			if (Integer.parseInt(thousands) <= 20) {
-				result += numberMap.get(Integer.parseInt(thousands)) + " ";
+		String dollars = "dollars";
+		String str = split[0];
+		for (int x = 0; x < (str.length() - 1) / 2; x++) {
+			String sub = "";
+			int lengthToSub = 0;
+			if (str.length() > x * 3 + 2) {
+				lengthToSub = 3;
+			} else if (str.length() == x * 3 + 2) {
+				lengthToSub = 2;
 			} else {
-				result += numberMap.get(Integer.parseInt(thousands.charAt(0) + "0")) + " ";
-				result += numberMap.get(Integer.parseInt(thousands.charAt(1)+ "")) + " ";
+				lengthToSub = 1;
 			}
-			result += "thousand ";
+			sub = str.substring(str.length() - lengthToSub - (x * 3), str.length() - (x * 3));	
+			System.out.println(sub);
+			if (lengthToSub == 3) {
+				String tens = "";
+				if (Integer.parseInt(sub.substring(1, 3)) > 19) {
+					tens = numberMap.get(Integer.parseInt(sub.charAt(1) + "0")) + " " + numberMap.get(Integer.parseInt(sub.charAt(2) + "")); 
+				} else {
+					tens = numberMap.get(Integer.parseInt(sub.substring(1, 2)));
+				}
+				dollars = " " + numberMap.get(Integer.parseInt(sub.charAt(0) + "")) + " hundred " + tens + " " + placeMap.get(x) + dollars;
+			} else {
+				System.out.println(sub);
+				System.out.println(sub.substring(0, 2));
+				String tens = "";
+				if (Integer.parseInt(sub.substring(0, sub.length())) > 19) {
+					tens = numberMap.get(Integer.parseInt(sub.charAt(0) + "0")) + " " + numberMap.get(Integer.parseInt(sub.charAt(1) + "")); 
+				} else {
+					tens = numberMap.get(Integer.parseInt(sub.substring(0, 1)));
+				}
+				dollars = " " + numberMap.get(Integer.parseInt(sub)) + " " + placeMap.get(x) + dollars;
+			}
 		}
-		
-		if (str.charAt(0) != '0') {
-			result += numberMap.get(Integer.parseInt(str.charAt(0) + "")) + " ";
-			result += "hundred ";
-		}
-		if (Integer.parseInt(str.substring(1, str.length())) <= 20) {
-			result += numberMap.get(Integer.parseInt(str.substring(1, str.length()))) + " ";
-		} else {
-			result += numberMap.get(Integer.parseInt(str.charAt(1) + "0")) + " ";
-			result += numberMap.get(Integer.parseInt(str.charAt(2)+ "")) + " ";
-		}
-		result += "dollars ";
-		if (cents.length() > 0 && Integer.parseInt(cents) > 0) {
-			result += "and ";
-			result += cents + "/100";
-		}
-		
-		System.out.println(result);
-		
-		result = result.substring(0, 1).toUpperCase() + result.substring(1);
-
-		return result.trim();
+		String result = (dollars + cents).trim();
+		return result.substring(0, 1).toUpperCase() + result.substring(1);
 	}
 
 	/**
@@ -126,6 +128,9 @@ public class CheckWriter {
         numberMap.put(70, "seventy");
         numberMap.put(80, "eighty");
         numberMap.put(90, "ninety");
+        placeMap.put(0, "");
+        placeMap.put(1, "thousand");
+        placeMap.put(2, "thousand");
 	}
 
 }

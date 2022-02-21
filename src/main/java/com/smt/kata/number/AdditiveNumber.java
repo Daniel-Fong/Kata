@@ -76,7 +76,7 @@ public class AdditiveNumber {
 			}
 			String str = sequence.substring(index, index + i);
 			if (str.charAt(0) == '0') break;
-			newList.add(Convert.formatInteger(str));
+//			newList.add(Convert.formatInteger(str));
 			if (index + i >= sequence.length() - 1 && newList.size() > 2) {
 				allLists.add(newList);
 			} else {

@@ -152,6 +152,7 @@ public class TextJustification {
 		for (int i = 0; i < line.size()-1; i++) {
 			line.set(i, line.get(i) + " ");
 		}
-		return StringUtil.padRight(String.join("", line), ' ', maxWidth);
+//		return (String.join("", line), ' ', maxWidth);
+		return "";
 	}
 }
