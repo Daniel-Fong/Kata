@@ -1,5 +1,7 @@
 package com.smt.kata.data;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: PairsDivisibleByK.java
  * <b>Project</b>: SMT-Kata
@@ -53,6 +55,24 @@ public class PairsDivisibleByK {
 	 * @return Number of matching pairs
 	 */
 	public int calculate(int[] values, int k) {
-		return k;
+		if ( values == null || values.length < 1 || values.length % 2 != 0 || k < 0 || k > 109) return 0;
+		Arrays.sort(values);
+		int pairs = 0;
+		for (int i = 0; i < values.length - 1; i++) {
+			int first = values[i];
+			if (first == 0) continue;
+			for (int j = values.length - 1; j > i; j--) {
+				int second = values[j];
+				if (second == 0) continue;
+				if ((first + second) % k == 0) {
+					System.out.println("first " + first + " | second " + second);
+					values[i] = 0;
+					values[j] = 0;
+					++pairs;
+					break;
+				}
+			}
+		}
+		return pairs;
 	}
 }
