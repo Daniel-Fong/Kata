@@ -38,17 +38,13 @@ public class TransposeMatrix {
 	 * @return
 	 */
 	public String parse(String[][] matrix) {
+		if (matrix == null || matrix.length < 1 || matrix[0] == null || matrix[0].length < 1) return "";
 		String result = "";
-		if (matrix == null || matrix.length == 0) {
-			return result;
-		}
 		for (int i = 0; i < matrix[0].length; i++) {
-			for (int j =0; j< matrix.length; j++) {
-				result += matrix[j][i];
-				result += " ";	
+			for (int j = 0; j < matrix.length; j++) {
+				result += matrix[j][i] + " ";
 			}
-			
 		}
-		return result.substring(0, result.length() - 1);
+		return result.trim();
 	}
 }

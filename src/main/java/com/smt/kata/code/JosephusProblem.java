@@ -22,6 +22,7 @@ package com.smt.kata.code;
  ****************************************************************************/
 public class JosephusProblem {
 
+	int[] finalArr;
 	/**
 	 * The position returned by josephus(n - 1, k) is adjusted because the recursive
 	 * call josephus(n - 1, k) considers the original position k%n + 1 as position 1
@@ -30,6 +31,55 @@ public class JosephusProblem {
 	 * @return
 	 */
 	public int josephusRecursive(int numSoldiers, int interval) {
-		return numSoldiers * interval;
+		int[] arr = new int[numSoldiers];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = 1;
+		}
+		findLast(numSoldiers, interval, interval%numSoldiers, arr);
+		int index = 0;
+		System.out.println("Final Arr");
+		for (int i = 0; i < finalArr.length; i++) {
+			System.out.print(finalArr[i]);
+			if (finalArr[i] == 1) {
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
+	
+	public void findLast (int numSoldiers, int interval, int index, int[] arr) {
+		if (numSoldiers == 1) {
+			finalArr = arr;
+			return;
+		}
+		int[] newArr = new int[arr.length];
+		System.out.println(" ");
+		for (int i = 0; i < arr.length; i++) {
+			System.out.print(arr[i]);
+			newArr[i] = arr[i];
+		}
+		int count = 0;
+		int curIndex = index;
+		while (count < interval) {
+			if (arr[curIndex] == 1) {
+				++count;
+			} 
+			if (curIndex >= arr.length - 1) {
+				curIndex = 0;
+			} else {
+				++curIndex;
+			}
+			
+		}
+		while (newArr[curIndex] != 1) {
+			if (curIndex >= arr.length - 1) {
+				curIndex = 0;
+			} else {
+				++curIndex;
+			}
+		}
+		newArr[curIndex] = 0;
+		findLast(numSoldiers - 1, interval, curIndex, newArr);
 	}
 }

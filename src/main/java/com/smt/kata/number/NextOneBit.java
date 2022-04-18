@@ -29,6 +29,22 @@ public class NextOneBit {
 	 * @return Next binary number with the same number of ones
 	 */
 	public String calculate(String binNum) {
-		return binNum;
+		if (binNum == null || binNum.length() < 1 || !binNum.matches("^[01]+$")) return "";
+		int num = Integer.parseInt(binNum, 2);
+		int ones = countOnes(binNum);
+		
+		while (true) {
+			num++;
+			String bin = Integer.toBinaryString(num);
+			if (countOnes(bin) == ones) return bin;
+		}
+	}
+	
+	public int countOnes(String bin) {
+		int count = 0;
+		for (char c : bin.toCharArray()) {
+			if (c == '1') ++count;
+		}
+		return count;
 	}
 }

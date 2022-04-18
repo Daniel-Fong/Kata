@@ -48,7 +48,29 @@ public class SplitBinaryString {
 	 * @return Count of matches when split
 	 */
 	public int split(String s) {
-		return s.length();
+		if (s == null || !s.matches("^[01]+$")) return 0;
+		int allOnes = 0;
+		for (char c : s.toCharArray()) {
+			if (c == '1') {
+				++allOnes;
+			}
+		}
+		if (allOnes <= 0 || allOnes % 3 != 0) return 0;
+		int onesPerPartition = allOnes/3;
+		int ones = 0;
+		int firstZeroes = 0;
+		int secondZeroes = 0;
+		for (char c : s.toCharArray()) {
+			if (c == '1') {
+				++ones;
+			} else {
+				if (ones >= onesPerPartition && ones < onesPerPartition + 1) {
+					++firstZeroes;
+				} else if (ones >= onesPerPartition * 2 && ones < onesPerPartition * 2 + 1) {
+					++secondZeroes;
+				}
+			}
+		}
+		return (firstZeroes + 1) * (secondZeroes +1);
 	}
-
 }

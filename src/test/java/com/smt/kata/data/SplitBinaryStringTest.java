@@ -92,4 +92,12 @@ class SplitBinaryStringTest {
 	void testSplitExampleFour() throws Exception {
 		assertEquals(1, sbs.split("111"));
 	}
+	
+	/**
+     * Test method for {@link com.smt.kata.data.SplitBinaryString#split(java.lang.String)}.
+     */
+    @Test
+    void testSplitExampleFive() throws Exception {
+        assertEquals(4, sbs.split("1010001011001"));
+    }
 }

@@ -34,6 +34,27 @@ public class ShortestSubstring {
 	 * @return Smallest substring.  Empty if not found
 	 */
 	public String find(String word, char[] sequence) {
-		return word;
+		if (word == null || word.length() < 1 || sequence == null || sequence.length > word.length() || sequence.length < 1) return ""; 
+		String result = "";
+		int length = word.length() + 1;
+		for (int i = 0; i < word.length(); i++) {
+			for (int j = i + 1; j <= word.length(); j++) {
+				String newWord = word.substring(i, j);
+				String temp = word.substring(i, j);
+				boolean valid = true;
+				for (char c : sequence) {
+					if (temp.indexOf(c) < 0) {
+						valid = false;
+					} else {
+						temp = temp.replaceFirst(c + "", "");
+					}
+				}
+				if (valid && length > newWord.length()) {
+					result = newWord;
+					length = newWord.length();
+				}
+			}
+		}
+		return result;
 	}
 }

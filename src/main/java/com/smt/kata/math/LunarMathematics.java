@@ -43,39 +43,32 @@ public class LunarMathematics {
 	 * @return Total of the lunar math addition of the provided 2 numbers
 	 */
 	public int add(int firstNumber, int secondNumber) {
-		String first = Integer.toString(Math.abs(firstNumber));
-		String second = Integer.toString(Math.abs(secondNumber));
-		int firstLength = first.length();
-		int secondLength = second.length();
-		int length = 0;
-		String result = "";
-		if (first.length() > second.length()) {
-			length = first.length();
+		String str1 = Integer.toString(Math.abs(firstNumber));
+		String str2 = Integer.toString(Math.abs(secondNumber));
+		int difference = Math.abs(str1.length()- str2.length());
+		if (str2.length() > str1.length()) {
+			str1 = addZeroes(str1, difference);
 		} else {
-			length = second.length();
+			str2 = addZeroes(str2, difference);
 		}
-		for (int i = 0; i < length; i++) {
-			String f = "";
-			String s = "";
-			if (firstLength == length || firstLength - i >= 1) {
-				f = first.charAt(firstLength - i -1)+"";
-			}
-			if (secondLength == length || secondLength - i >= 1) {
-				s = second.charAt(secondLength - i - 1)+"";
-			}
-			if (f.length() > 0 && s.length() > 0) {
-				if (Integer.parseInt(f) > Integer.parseInt(s)) {
-					result = f+result;
-				} else {
-					result = s+result;
-				}
-			} else if (f.length() > 0) {
-				result = f+result;
+		String result = "";
+		for (int i = 0; i < str1.length(); i++) {
+			if (str1.charAt(i) > str2.charAt(i)) {
+				result += str1.charAt(i) + "";
 			} else {
-				result = s+result;
+				result += str2.charAt(i) + "";
 			}
 		}
 		return Integer.parseInt(result);
+	}
+	
+	public String addZeroes(String str, int difference) {
+		int count = 0;
+		while (count < difference) {
+			str = "0" + str;
+			++count;
+		}
+		return str;
 	}
 
 }

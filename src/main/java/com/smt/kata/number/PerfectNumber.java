@@ -27,7 +27,24 @@ public class PerfectNumber {
 	 * @return Value of the nth perfect number
 	 */
 	public int find(int nth) {
-		return 0;
+		int count = 0;
+		int curNum = 0;
+		while (count < nth) {
+			++curNum;
+			if (isPerfect(curNum)) {
+				++count;
+			}
+		}
+		return curNum;
 	}
+	
+	private boolean isPerfect(int num) {
+        String str = num + "";
+        int total = 0;
+        for (char c : str.toCharArray()) {
+            total += Character.getNumericValue(c);
+        }
+        return 10 == total;
+    }
 
 }
