@@ -1,5 +1,10 @@
 package com.smt.kata.math;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sun.jdi.connect.Connector.IntegerArgument;
+
 /****************************************************************************
  * <b>Title</b>: PerfectSquares.java
  * <b>Project</b>: SMT-Kata
@@ -21,6 +26,9 @@ package com.smt.kata.math;
  * @updates:
  ****************************************************************************/
 public class PerfectSquares {
+	
+	public List<List<Integer>> results = new ArrayList<>();
+	public int overflow;
 
 	/**
 	 * Finds the smallest number of squares that add to the total "n"
@@ -28,6 +36,40 @@ public class PerfectSquares {
 	 * @return Number of squares to solve the matches
 	 */
 	public int findSmallestNumber(int n) {
-		return n;
+		overflow = Integer.MAX_VALUE;
+		List<Integer> perfectSquares = getPerfectSquares(n);
+		if (perfectSquares.contains(n)) return 1;
+		getCombos(perfectSquares, new ArrayList<>(), 0, n);
+		System.out.println(results);
+		int smallest = results.get(0).size();
+		for (List<Integer> list : results) {
+			if (list.size() < smallest) {
+				smallest = list.size();
+			}
+		}
+		return smallest;
+	}
+	
+	public List<Integer> getPerfectSquares(int n) {
+		List<Integer> result = new ArrayList<>();
+		for (int i = 1; i <= n; i++) {
+			if (Math.sqrt(i) % 1 == 0) result.add(i); 
+		}
+		return result;
+	}
+	
+	public void getCombos(List<Integer> perfectSquares, List<Integer> result, int total, int target) {		
+		if (total == target) {
+			results.add(result);
+			return;
+		} 
+		if (result.size() > 4) return;
+		for (int num : perfectSquares) {
+			List<Integer>  newList = new ArrayList<>(result);
+			if (total + num <= target) {
+				newList.add(num);
+				getCombos(perfectSquares, newList, total + num, target);
+			}
+		}
 	}
 }

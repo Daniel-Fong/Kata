@@ -26,6 +26,7 @@ package com.smt.kata.distance;
  * @updates:
  ****************************************************************************/
 public class CountMatrixPaths {
+	public int count;
 	
 	/**
 	 * Counts the number of pathways through the matrix
@@ -34,6 +35,20 @@ public class CountMatrixPaths {
 	 * @return Number of pathways through the matrix
 	 */
 	public int count(int rows, int cols) {
-		return rows + cols;
+		findPaths(1, 1, rows, cols);
+		return count;
 	}
+	
+	public void findPaths(int x, int y, int rows, int cols) {
+		if (x == cols && y == rows) {
+			++count;
+			return;
+		} 
+		if (x < cols) {
+			findPaths(x+1, y, rows, cols);
+		}
+		if (y < rows) {
+			findPaths(x, y+1, rows, cols);
+		}
+	}	
 }

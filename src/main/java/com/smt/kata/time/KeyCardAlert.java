@@ -2,7 +2,9 @@ package com.smt.kata.time;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /****************************************************************************
  * <b>Title</b>: KeyCardAlert.java
@@ -65,7 +67,46 @@ public class KeyCardAlert {
 	 * @return List of names that met the criteria from above
 	 */
     public List<String> find(String[] keyName, String[] keyTime) {
-    	return new ArrayList<>();
+    	if (keyName == null || keyTime == null || keyName.length != keyTime.length) return new ArrayList<>();
+    	Map<String, List<String>> map = new HashMap<>();
+    	List<String> result = new ArrayList<>();
+    	for (int i = 0; i < keyName.length; i++) {
+    		List<String> list = new ArrayList<>();
+    		if (map.containsKey(keyName[i])) {
+    			list = new ArrayList<>(map.get(keyName[i]));
+    			list.add(keyTime[i]);
+    			map.replace(keyName[i], list);
+    		} else {
+    			list.add(keyTime[i]);
+       			map.put(keyName[i], list);
+    		}
+    	}
+    	for (String name : map.keySet()) {
+    		if (isFrequent(map.get(name))) {
+    			result.add(name);
+    		}
+    	}
+    	return result;
+    }
+    
+    public boolean isFrequent(List<String> list) {
+    	for (int i = 0; i < list.size() - 2; i++) {
+    		String first = list.get(i);
+    		String last = list.get(i + 2);
+    		if (convertToMins(first) + 60 >= convertToMins(last)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    public int convertToMins(String str) {
+    	char[] arr = str.toCharArray();
+    	int hours = Integer.parseInt((arr[0] + "") + (arr[1] + ""));
+    	System.out.println(hours);
+    	int total = hours * 60;
+    	int mins = Integer.parseInt(arr[3] + arr[4] + "");
+    	total += mins;
+    	return total;
     }
 
 }

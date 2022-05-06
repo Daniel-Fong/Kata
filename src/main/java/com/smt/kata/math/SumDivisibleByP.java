@@ -1,5 +1,10 @@
 package com.smt.kata.math;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: SumDivisibleByP.java
  * <b>Project</b>: SMT-Kata
@@ -55,6 +60,44 @@ public class SumDivisibleByP {
 	 * @return Smallest number of removed items.  -1 if not possible
 	 */
  	public int calculate(int[] nums, int p) {
- 		return p;
+ 		if(nums == null || nums.length < 1) return -1;
+ 		int min = nums.length;
+ 		boolean isAnswer = false;
+ 		List<List<Integer>> subsets = getSubsets(nums);
+ 		for (List<Integer> arr : subsets) {
+ 			if (isDivisible(arr, p)) {
+ 				if (nums.length - arr.size() < min) {
+ 					min = nums.length - arr.size();
+ 					isAnswer = true;
+ 				}
+ 			}
+ 		}
+ 		if (!isAnswer) return -1;
+ 		return min;
+ 	}
+ 	
+ 	public List<List<Integer>> getSubsets(int[] nums) {
+ 		List<Integer> numsList = Arrays.stream(nums).boxed().collect(Collectors.toList());
+ 		List<List<Integer>> list = new ArrayList<>();
+ 		for (int i = 0; i < nums.length; i++) {
+ 			for (int j = i; j <= nums.length; j++) {
+ 				List<Integer> temp = new ArrayList<>(numsList);
+ 				temp.subList(i, j).clear();
+ 				list.add(temp);
+ 			}
+ 		}
+ 		return list;
+ 	}
+ 	
+ 	public boolean isDivisible(List<Integer> nums, int p) {
+ 		int sum = 0;
+ 		for(int num: nums) {
+ 			sum += num;
+ 		}
+ 		if (sum % p == 0) {
+ 			return true;
+ 		} else {
+ 			return false;
+ 		}
  	}
 }
