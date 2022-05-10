@@ -1,5 +1,11 @@
 package com.smt.kata.math;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: ReduceXZero.java
  * <b>Project</b>: SMT-Kata
@@ -40,6 +46,7 @@ package com.smt.kata.math;
  * @updates:
  ****************************************************************************/
 public class ReduceXZero {
+	List<Integer> results;
 
 	/**
 	 * Find the minimum operations to match sum to X
@@ -48,6 +55,25 @@ public class ReduceXZero {
 	 * @return Minimum number of moves to match the sum
 	 */
 	public int minOperations(int[] nums, int x) {
-		return x;
+		if (nums == null || nums.length < 1) return -1;
+		results = new ArrayList<>();
+		List<Integer> numList = Arrays.stream(nums).boxed().collect(Collectors.toList());
+		findPossible(numList, 0, x, 0);
+		Collections.sort(results);
+		return results.size() >= 1 ? results.get(0) : -1;
+	}
+	
+	public void findPossible(List<Integer> nums, int count, int target, int curSum) {
+		if (curSum == target) {
+			results.add(count);
+			return;
+		}
+		if (nums.size() == 0) return;
+		List<Integer> removeFirst = new ArrayList<>(nums);
+		removeFirst.remove(0);
+		List<Integer> removeLast = new ArrayList<>(nums);
+		removeLast.remove(nums.size() - 1);
+		findPossible(removeFirst, count + 1, target, curSum + nums.get(0));
+		findPossible(removeLast, count + 1, target, curSum + nums.get(nums.size()-1));
 	}
 }

@@ -1,5 +1,8 @@
 package com.smt.kata.money;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: MinimumChangeReceived.java
  * <b>Project</b>: SMT-Kata
@@ -27,7 +30,20 @@ public class MinimumChangeReceived {
 	 * @return
 	 */
 	public int calculate(double dAmt) {
-		return 0;
+		List<Integer> coins = new ArrayList<>();
+		coins.add(25);
+		coins.add(10);
+		coins.add(5);
+		coins.add(1);
+		int count = 0;
+		double curAmt = dAmt * 100;
+		for(double coin: coins) {
+			while(curAmt >= coin) {
+				++count;
+				curAmt = curAmt - coin;
+			}
+		}
+		return count;
 	}
 
 }
